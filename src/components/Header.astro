@@ -1,0 +1,32 @@
+---
+const navLinks = [
+  { href: '/', label: 'Home' },
+  { href: '/homes', label: 'Our Homes' },
+  { href: '/process', label: 'Process' },
+  { href: '/about', label: 'About' },
+];
+---
+
+<div class="site-header-inner">
+  <div class="nav-left">
+    <div>
+      <div class="brand-mark">Utah • Custom Homes</div>
+      <div class="brand-name">Utah Oasis Homes</div>
+    </div>
+  </div>
+
+  <nav class="nav-center" aria-label="Primary">
+    {navLinks.map((link) => (
+      <a href={link.href}>{link.label}</a>
+    ))}
+  </nav>
+
+  <div class="nav-right">
+    <a href="tel:(801) 859-3317)" class="btn btn-ghost">
+      Call
+    </a>
+    <a href="/start" class="btn btn-primary">
+      Start Your Project
+    </a>
+  </div>
+</div>

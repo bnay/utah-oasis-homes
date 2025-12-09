@@ -1,0 +1,78 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+---
+
+<BaseLayout title="Start Your Project – Utah Oasis Homes">
+  <section class="section">
+    <div class="section-header">
+      <h1 class="section-title">Start Your Project</h1>
+      <p class="section-subtitle">
+        Share a few details about your vision, and we’ll follow up to schedule a conversation.
+      </p>
+    </div>
+
+    <div class="card">
+      <form
+        method="POST"
+        action="https://formspree.io/f/your-form-id"
+        style="display: grid; gap: 1rem; max-width: 520px;"
+      >
+        <div>
+          <label for="name" style="font-size: 0.85rem;">Name</label>
+          <input
+            id="name"
+            name="name"
+            required
+            style="width: 100%; padding: 0.6rem 0.7rem; margin-top: 0.2rem; border-radius: 8px; border: 1px solid var(--border-subtle); background: #101117; color: var(--text);"
+          />
+        </div>
+        <div>
+          <label for="email" style="font-size: 0.85rem;">Email</label>
+          <input
+            id="email"
+            name="email"
+            type="email"
+            required
+            style="width: 100%; padding: 0.6rem 0.7rem; margin-top: 0.2rem; border-radius: 8px; border: 1px solid var(--border-subtle); background: #101117; color: var(--text);"
+          />
+        </div>
+        <div>
+          <label for="phone" style="font-size: 0.85rem;">Phone</label>
+          <input
+            id="phone"
+            name="phone"
+            style="width: 100%; padding: 0.6rem 0.7rem; margin-top: 0.2rem; border-radius: 8px; border: 1px solid var(--border-subtle); background: #101117; color: var(--text);"
+          />
+        </div>
+        <div>
+          <label for="location" style="font-size: 0.85rem;">Project location / lot</label>
+          <input
+            id="location"
+            name="location"
+            style="width: 100%; padding: 0.6rem 0.7rem; margin-top: 0.2rem; border-radius: 8px; border: 1px solid var(--border-subtle); background: #101117; color: var(--text);"
+          />
+        </div>
+        <div>
+          <label for="budget" style="font-size: 0.85rem;">Estimated budget</label>
+          <input
+            id="budget"
+            name="budget"
+            style="width: 100%; padding: 0.6rem 0.7rem; margin-top: 0.2rem; border-radius: 8px; border: 1px solid var(--border-subtle); background: #101117; color: var(--text);"
+          />
+        </div>
+        <div>
+          <label for="message" style="font-size: 0.85rem;">Tell us about your project</label>
+          <textarea
+            id="message"
+            name="message"
+            rows={5}
+            style="width: 100%; padding: 0.6rem 0.7rem; margin-top: 0.2rem; border-radius: 8px; border: 1px solid var(--border-subtle); background: #101117; color: var(--text); resize: vertical;"
+          ></textarea>
+        </div>
+        <button type="submit" class="btn btn-primary" style="justify-self: flex-start;">
+          Submit
+        </button>
+      </form>
+    </div>
+  </section>
+</BaseLayout>

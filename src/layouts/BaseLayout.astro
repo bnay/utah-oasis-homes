@@ -1,0 +1,38 @@
+---
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import '../styles/global.css';
+
+interface Props {
+  title?: string;
+  description?: string;
+}
+
+const {
+  title = 'Utah Oasis Homes – Custom Luxury Homes in Utah',
+  description = 'Custom luxury homes that feel like private resorts, crafted for Utah’s most inspiring landscapes.',
+} = Astro.props;
+---
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>{title}</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content={description} />
+  </head>
+  <body class="site-shell">
+    <header class="site-header">
+      <Header />
+    </header>
+
+    <main>
+      <slot />
+    </main>
+
+    <footer class="site-footer">
+      <Footer />
+    </footer>
+  </body>
+</html>

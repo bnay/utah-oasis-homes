@@ -1,0 +1,29 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { homes } from '../data/homes';
+---
+
+<BaseLayout title="Our Homes – Utah Oasis Homes">
+  <section class="section">
+    <div class="section-header">
+      <h1 class="section-title">Our Homes</h1>
+      <p class="section-subtitle">
+        A selection of custom residences designed as private retreats across Utah.
+      </p>
+    </div>
+    <div class="card-grid">
+      {homes.map((home) => (
+        <article class="card">
+          <h2 style="font-size: 1.1rem; margin-bottom: 0.2rem;">{home.name}</h2>
+          <p style="font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.12em;">
+            {home.location}
+          </p>
+          <p style="margin-top: 0.6rem;">{home.headline}</p>
+          <p style="font-size: 0.85rem; margin-top: 0.6rem; color: var(--muted);">
+            {home.description}
+          </p>
+        </article>
+      ))}
+    </div>
+  </section>
+</BaseLayout>
