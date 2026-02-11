@@ -1,4 +1,6 @@
 ---
+
+
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
 import '../styles/global.css';
@@ -18,10 +20,24 @@ const {
 <html lang="en">
   <head>
     <meta charset="utf-8" />
+    <link rel="icon" type="image/png" sizes="512x512" href="/branding/uoh-favicon-512.png" />
     <title>{title}</title>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="description" content={description} />
+
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:type" content="website" />
+    <meta property="og:image" content="/branding/uoh-og.png" />
+
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content="/branding/uoh-og.png" />
+    
+    <link rel="canonical" href={Astro.url.href} />
   </head>
+
   <body class="site-shell">
     <header class="site-header">
       <Header />

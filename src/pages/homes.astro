@@ -1,4 +1,4 @@
----
+<!-- ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import { homes } from '../data/homes';
 ---
@@ -22,6 +22,71 @@ import { homes } from '../data/homes';
           <p style="font-size: 0.85rem; margin-top: 0.6rem; color: var(--muted);">
             {home.description}
           </p>
+        </article>
+      ))}
+    </div>
+  </section>
+</BaseLayout> -->
+
+
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import { getCollection } from "astro:content";
+
+const homes = await getCollection("homes");
+
+// Sort: featured first, then order, then title
+homes.sort((a, b) => {
+  const fa = a.data.featured ? 1 : 0;
+  const fb = b.data.featured ? 1 : 0;
+  if (fa !== fb) return fb - fa;
+
+  const oa = a.data.order ?? 9999;
+  const ob = b.data.order ?? 9999;
+  if (oa !== ob) return oa - ob;
+
+  return a.data.title.localeCompare(b.data.title);
+});
+---
+
+<BaseLayout
+  title="Our Homes | Utah Oasis Homes"
+  description="A curated selection of custom homes crafted by Utah Oasis Homes."
+>
+  <section>
+    <div class="section-header">
+      <div class="pill-eyebrow">Our Work</div>
+      <h1 class="section-title">Our Homes</h1>
+      <p class="section-subtitle">
+        A selection of custom builds designed to feel like private resorts—crafted for Utah’s most inspiring landscapes.
+      </p>
+    </div>
+
+    <!-- <p style="opacity:.7; margin-bottom: 1rem;">Loaded homes: {homes.length}</p> -->
+
+    <div class="homes-grid">
+      {homes.map((home) => (
+        <article class="home-card">
+          <div class="home-card-media">
+            <a href={`/homes/${home.slug}`} aria-label={`View ${home.data.title}`}>
+              <img src={home.data.coverImage} alt={home.data.title} loading="lazy" />
+            </a>
+          </div>
+
+          <div class="home-card-body">
+            <h2 class="home-card-title">
+              <a href={`/homes/${home.slug}`}>{home.data.title}</a>
+            </h2>
+            <div class="home-card-location">{home.data.location}</div>
+
+            {home.data.tags?.length ? (
+              <div class="tag-row">
+                {home.data.tags.map((t) => (
+                  <span class="tag">{t}</span>
+                ))}
+              </div>
+            ) : null}
+          </div>
         </article>
       ))}
     </div>

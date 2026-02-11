@@ -1,32 +1,89 @@
 ---
-const navLinks = [
-  { href: '/', label: 'Home' },
-  { href: '/homes', label: 'Our Homes' },
-  { href: '/process', label: 'Process' },
-  { href: '/about', label: 'About' },
-];
+const currentPath = Astro.url.pathname;
 ---
 
 <div class="site-header-inner">
+
   <div class="nav-left">
-    <div>
-      <div class="brand-mark">Utah • Custom Homes</div>
-      <div class="brand-name">Utah Oasis Homes</div>
+    <a href="/" class="nav-logo">
+      <img
+        class="brand-logo"
+        src="/images/uoh-logo-2025-wide.png"
+        alt="Utah Oasis Homes"
+      />
+    </a>
+
+    <div class="nav-separator"></div>
+
+    <div class="nav-left">
+      (801) 859-3317
     </div>
+    
+    <div class="nav-separator"></div>
+    
   </div>
 
-  <nav class="nav-center" aria-label="Primary">
-    {navLinks.map((link) => (
-      <a href={link.href}>{link.label}</a>
-    ))}
+  <nav class="nav-center" aria-label="Primary navigation">
+    <a href="/" class:list={["nav-link", currentPath === "/" && "nav-link--active"]}>Home</a>
+    <a href="/homes" class:list={["nav-link", currentPath.startsWith("/homes") && "nav-link--active"]}>Our Homes</a>
+    <a href="/process" class:list={["nav-link", currentPath.startsWith("/process") && "nav-link--active"]}>Process</a>
+    <a href="/about" class:list={["nav-link", currentPath.startsWith("/about") && "nav-link--active"]}>About</a>
   </nav>
 
-  <div class="nav-right">
-    <a href="tel:(801) 859-3317)" class="btn btn-ghost">
-      Call
-    </a>
-    <a href="/start" class="btn btn-primary">
-      Start Your Project
-    </a>
-  </div>
+  <details class="nav-mobile">
+    <summary class="nav-mobile-trigger" aria-label="Toggle navigation menu">
+      <span class="nav-mobile-burger" aria-hidden="true">
+        <span class="bar"></span>
+        <span class="bar"></span>
+        <span class="bar"></span>
+      </span>
+      <span class="nav-mobile-label">Menu</span>
+    </summary>
+
+    <nav class="nav-mobile-panel" aria-label="Mobile navigation">
+      <a href="/" class:list={["nav-mobile-link", currentPath === "/" && "is-active"]}>Home</a>
+      <a href="/homes" class:list={["nav-mobile-link", currentPath.startsWith("/homes") && "is-active"]}>Our Homes</a>
+      <a href="/process" class:list={["nav-mobile-link", currentPath.startsWith("/process") && "is-active"]}>Process</a>
+      <a href="/about" class:list={["nav-mobile-link", currentPath.startsWith("/about") && "is-active"]}>About</a>
+    </nav>
+  </details> 
+
 </div>
+
+<script>
+  document.addEventListener("DOMContentLoaded", () => {
+    const mobileNav = document.querySelector(".nav-mobile");
+    if (!mobileNav) return;
+
+    const links = mobileNav.querySelectorAll("a");
+
+    links.forEach(link => {
+      link.addEventListener("click", () => {
+        mobileNav.removeAttribute("open");
+      });
+    });
+  });
+</script>
+
+<script>
+  const details = document.querySelector(".nav-mobile");
+  if (details) {
+    // Close when clicking a link
+    details.querySelectorAll("a").forEach((a) => {
+      a.addEventListener("click", () => details.removeAttribute("open"));
+    });
+
+    // Close on Escape
+    document.addEventListener("keydown", (e) => {
+      if (e.key === "Escape") details.removeAttribute("open");
+    });
+
+    // Click-outside-to-close
+    document.addEventListener("click", (e) => {
+      if (!details.hasAttribute("open")) return;
+      const target = e.target;
+      if (!(target instanceof Node)) return;
+      if (!details.contains(target)) details.removeAttribute("open");
+    });
+  }
+</script>

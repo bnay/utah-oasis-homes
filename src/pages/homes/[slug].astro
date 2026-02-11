@@ -1,0 +1,109 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import { getCollection, render } from "astro:content";
+import type { CollectionEntry } from "astro:content";
+
+export async function getStaticPaths() {
+  const homes = await getCollection("homes");
+  return homes.map((home) => ({
+    params: { slug: home.slug },
+    props: { home },
+  }));
+}
+
+type Props = {
+  home: CollectionEntry<"homes">;
+};
+
+const { home } = Astro.props as Props;
+const { title, location, coverImage, tags } = home.data;
+
+const { Content } = await render(home);
+
+// Build an ordered list for prev/next navigation
+const allHomes = await getCollection("homes");
+allHomes.sort((a, b) => {
+  const fa = a.data.featured ? 1 : 0;
+  const fb = b.data.featured ? 1 : 0;
+  if (fa !== fb) return fb - fa;
+
+  const oa = a.data.order ?? 9999;
+  const ob = b.data.order ?? 9999;
+  if (oa !== ob) return oa - ob;
+
+  return a.data.title.localeCompare(b.data.title);
+});
+
+const idx = allHomes.findIndex((h) => h.slug === home.slug);
+const prevHome = idx > 0 ? allHomes[idx - 1] : null;
+const nextHome = idx >= 0 && idx < allHomes.length - 1 ? allHomes[idx + 1] : null;
+
+---
+
+<BaseLayout
+  title={`${title} | Utah Oasis Homes`}
+  description={`Explore ${title}, a custom home in ${location}.`}
+>
+  <section class="home-detail">
+    <a class="home-back" href="/homes">← Back to Our Homes</a>
+
+    <header class="home-hero">
+      <div class="home-hero-media">
+        <img src={coverImage} alt={title} />
+      </div>
+
+      <div class="home-hero-body">
+        <h1 class="home-title">{title}</h1>
+        <div class="home-location">{location}</div>
+
+        {tags?.length ? (
+          <div class="tag-row home-tags">
+            {tags.map((t) => (
+              <span class="tag">{t}</span>
+            ))}
+          </div>
+        ) : null}
+      </div>
+    </header>
+
+    <article class="home-content">
+      <Content />
+    </article>
+
+    {home.data.gallery?.length ? (
+      <section class="home-gallery" aria-label="Home gallery">
+        <h2 class="home-gallery-title">Gallery</h2>
+        <div class="home-gallery-grid">
+          {home.data.gallery.map((src) => (
+            <img src={src} alt={`${title} gallery image`} loading="lazy" />
+          ))}
+        </div>
+      </section>
+    ) : null}
+
+    <nav class="home-pager" aria-label="More homes">
+      {prevHome ? (
+        <a class="home-pager-link home-pager-prev" href={`/homes/${prevHome.slug}`}>
+          <span class="home-pager-kicker">
+            <span class="home-chevron">←</span>
+            Previous
+          </span>
+          <span class="home-pager-title">{prevHome.data.title}</span>
+          <span class="home-pager-meta">{prevHome.data.location}</span>
+        </a>
+      ) : <span />}
+
+      {nextHome ? (
+        <a class="home-pager-link home-pager-next" href={`/homes/${nextHome.slug}`}>
+          <span class="home-pager-kicker">
+            Next
+            <span class="home-chevron">→</span>
+          </span>
+          <span class="home-pager-title">{nextHome.data.title}</span>
+          <span class="home-pager-meta">{nextHome.data.location}</span>
+        </a>
+      ) : <span />}
+    </nav>
+
+</section>
+</BaseLayout>
