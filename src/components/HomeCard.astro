@@ -1,0 +1,23 @@
+---
+const { home } = Astro.props;
+---
+
+<article class="home-card">
+  <div class="home-card-media">
+    <a href={`/homes/${home.slug}`} aria-label={`View ${home.data.title}`}>
+      <img src={home.data.coverImage} alt={home.data.title} loading="lazy" />
+    </a>
+  </div>
+  <div class="home-card-body">
+    <h3 class="home-card-title">
+      <a href={`/homes/${home.slug}`}>{home.data.title}</a>
+    </h3>
+    <div class="home-card-location">{home.data.location}</div>
+
+    {home.data.tags?.length ? (
+      <div class="tag-row">
+        {home.data.tags.map((x) => <span class="tag">{x}</span>)}
+      </div>
+    ) : null}
+  </div>
+</article>

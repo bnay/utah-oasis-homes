@@ -1,10 +1,26 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
 import { getCollection } from "astro:content";
+import type { CollectionEntry } from "astro:content";
+import HomeCard from "../components/HomeCard.astro";
+
+// Keep this page SSR so we can 301 old query-string URLs to the new clean routes
+export const prerender = false;
+
+type Home = CollectionEntry<"homes">;
 
 const homes = await getCollection("homes");
 
-const sortHomes = (a, b) => {
+const toTagSlug = (t: unknown) =>
+  String(t ?? "")
+    .trim()
+    .toLowerCase()
+    .replace(/&/g, "and")
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/(^-|-$)/g, "");
+
+
+const sortHomes = (a: CollectionEntry<"homes">, b: CollectionEntry<"homes">) => {
   const fa = a.data.featured ? 1 : 0;
   const fb = b.data.featured ? 1 : 0;
   if (fa !== fb) return fb - fa;
@@ -18,22 +34,24 @@ const sortHomes = (a, b) => {
 
 homes.sort(sortHomes);
 
-// Build tag list
-const allTags = Array.from(
-  new Set(homes.flatMap((h) => h.data.tags ?? []))
-).sort((a, b) => a.localeCompare(b));
+// Build tag list (display values)
+const allTags = Array.from(new Set(homes.flatMap((h) => h.data.tags ?? []))).sort((a, b) =>
+  a.localeCompare(b)
+);
 
 // Read filter from URL (?tag=Modern)
 const tag = Astro.url.searchParams.get("tag");
-const activeTag = tag && allTags.includes(tag) ? tag : null;
 
-// Split featured + rest (after filtering)
-const filtered = activeTag
-  ? homes.filter((h) => (h.data.tags ?? []).includes(activeTag))
-  : homes;
+// Redirect legacy query-string filter URLs to the SEO-friendly route
+if (tag) {
+  return Astro.redirect(`/homes/tag/${toTagSlug(tag)}`, 301);
+}
 
+// /homes shows all homes (tag filtering lives on /homes/tag/[tag])
+const filtered = homes;
 const featuredHomes = filtered.filter((h) => h.data.featured);
 const otherHomes = filtered.filter((h) => !h.data.featured);
+
 ---
 
 <BaseLayout
@@ -51,17 +69,22 @@ const otherHomes = filtered.filter((h) => !h.data.featured);
 
 {allTags.length ? (
   <div class="homes-filters" aria-label="Filter homes">
-    <a class:list={["filter-chip", !activeTag && "is-active"]} href="/homes">
+    <a
+      class:list={["filter-chip", "is-active"]}
+      href="/homes"
+      aria-current="page"
+      data-astro-reload
+    >
       All
     </a>
 
-    {allTags.map((t) => {
-      const isActive = activeTag === t;
+    {allTags.map((t: string) => {
+      
       return (
         <a
-          class:list={["filter-chip", isActive && "is-active"]}
-          href={isActive ? "/homes" : `/homes?tag=${encodeURIComponent(t)}`}
-          aria-current={isActive ? "true" : undefined}
+          class:list={["filter-chip"]}
+          href={`/homes/tag/${toTagSlug(t)}`}
+          data-astro-reload
         >
           {t}
         </a>
@@ -70,66 +93,27 @@ const otherHomes = filtered.filter((h) => !h.data.featured);
   </div>
 ) : null}
 
-
 {featuredHomes.length ? (
   <>
     <h2 class="homes-subhead">Featured</h2>
     <div class="homes-grid">
-      {featuredHomes.map((home) => (
-        <article class="home-card">
-          <div class="home-card-media">
-            <a href={`/homes/${home.slug}`} aria-label={`View ${home.data.title}`}>
-              <img src={home.data.coverImage} alt={home.data.title} loading="lazy" />
-            </a>
-          </div>
-          <div class="home-card-body">
-            <h3 class="home-card-title">
-              <a href={`/homes/${home.slug}`}>{home.data.title}</a>
-            </h3>
-            <div class="home-card-location">{home.data.location}</div>
-
-            {home.data.tags?.length ? (
-              <div class="tag-row">
-                {home.data.tags.map((x) => <span class="tag">{x}</span>)}
-              </div>
-            ) : null}
-          </div>
-        </article>
-      ))}
+      {featuredHomes.map((home) => <HomeCard home={home} />)}
     </div>
   </>
 ) : null}
+
+<p class="homes-filter-status">Showing all {homes.length} homes.</p>
 
 {otherHomes.length ? (
   <>
     <h2 class="homes-subhead">{featuredHomes.length ? "More Homes" : "Homes"}</h2>
     <div class="homes-grid">
-      {otherHomes.map((home) => (
-        <article class="home-card">
-          <div class="home-card-media">
-            <a href={`/homes/${home.slug}`} aria-label={`View ${home.data.title}`}>
-              <img src={home.data.coverImage} alt={home.data.title} loading="lazy" />
-            </a>
-          </div>
-          <div class="home-card-body">
-            <h3 class="home-card-title">
-              <a href={`/homes/${home.slug}`}>{home.data.title}</a>
-            </h3>
-            <div class="home-card-location">{home.data.location}</div>
-
-            {home.data.tags?.length ? (
-              <div class="tag-row">
-                {home.data.tags.map((x) => <span class="tag">{x}</span>)}
-              </div>
-            ) : null}
-          </div>
-        </article>
-      ))}
+      {otherHomes.map((home) => <HomeCard home={home} />)}
     </div>
   </>
 ) : (
   <p style="color: var(--muted); margin-top: 1.25rem;">
-    No homes found{activeTag ? ` for “${activeTag}”.` : "."}
+    No homes found.
   </p>
 )}
 

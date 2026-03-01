@@ -13,7 +13,17 @@ interface Props {
 const {
   title = 'Utah Oasis Homes – Custom Luxury Homes in Utah',
   description = 'Custom luxury homes that feel like private resorts, crafted for Utah’s most inspiring landscapes.',
+  robots = "index,follow",
 } = Astro.props;
+
+// Canonical URL:
+// - Prefer absolute (requires `site:` in astro.config.*)
+// - Fallback to path-only in dev to avoid crashing when Astro.site is undefined
+const canonical = new URL(Astro.url);
+canonical.search = "";
+canonical.hash = "";
+const canonicalUrl = canonical.href;
+
 ---
 
 <!DOCTYPE html>
@@ -29,6 +39,8 @@ const {
     <meta property="og:description" content={description} />
     <meta property="og:type" content="website" />
     <meta property="og:image" content="/branding/uoh-og.png" />
+    <meta property="og:url" content={canonicalUrl} />
+    <meta property="og:site_name" content="Utah Oasis Homes" />
 
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content={title} />
