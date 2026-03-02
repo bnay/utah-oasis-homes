@@ -1,0 +1,166 @@
+---
+import BaseLayout from "../../../layouts/BaseLayout.astro";
+import HomeCard from "../../../components/HomeCard.astro";
+import { getCollection } from "astro:content";
+
+export const prerender = true;
+
+function norm(s: unknown) {
+  return String(s ?? "")
+    .replace(/\u200B/g, "")
+    .trim()
+    .toLowerCase();
+}
+
+function toTagSlug(t: unknown) {
+  return String(t ?? "")
+    .trim()
+    .toLowerCase()
+    .replace(/&/g, "and")
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/(^-|-$)/g, "");
+}
+
+// Required for prerendered dynamic routes
+export async function getStaticPaths() {
+  // Keep slugger local so it’s always available during Astro’s route build step
+  const slugger = (t: unknown) =>
+    String(t ?? "")
+      .trim()
+      .toLowerCase()
+      .replace(/&/g, "and")
+      .replace(/[^a-z0-9]+/g, "-")
+      .replace(/(^-|-$)/g, "");
+
+  const homes = await getCollection("homes");
+  const tags = Array.from(new Set(homes.flatMap((h) => h.data.tags ?? [])));
+
+  return tags.map((t) => ({ params: { tag: slugger(t) } }));
+}
+
+const homes = await getCollection("homes");
+
+homes.sort((a, b) => {
+  const fa = a.data.featured ? 1 : 0;
+  const fb = b.data.featured ? 1 : 0;
+  if (fa !== fb) return fb - fa;
+
+  const oa = a.data.order ?? 9999;
+  const ob = b.data.order ?? 9999;
+  if (oa !== ob) return oa - ob;
+
+  return a.data.title.localeCompare(b.data.title);
+});
+
+const allTags = Array.from(new Set(homes.flatMap((h) => h.data.tags ?? []))).sort((a, b) =>
+  a.localeCompare(b)
+);
+
+const tagSlugToTag = new Map(allTags.map((t) => [toTagSlug(t), t]));
+
+const tagSlug = Astro.params.tag;
+const activeTag = tagSlug ? tagSlugToTag.get(norm(tagSlug)) ?? null : null;
+
+if (!activeTag) {
+  return Astro.redirect("/homes", 302);
+}
+
+const filtered = homes.filter((h) => (h.data.tags ?? []).some((t) => norm(t) === norm(activeTag)));
+const featuredHomes = filtered.filter((h) => h.data.featured);
+const otherHomes = filtered.filter((h) => !h.data.featured);
+
+const hasFeatured = featuredHomes.length > 0;
+const hasOther = otherHomes.length > 0;
+const totalCount = filtered.length;
+
+// JSON-LD ItemList (matches display order: Featured first, then More Homes)
+const siteOrigin = Astro.site?.toString() ?? Astro.url.origin;
+const orderedHomes = [...featuredHomes, ...otherHomes];
+const itemListJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "ItemList",
+  name: `Utah Oasis Homes – ${activeTag} Homes`,
+  itemListElement: orderedHomes.map((home, i) => ({
+    "@type": "ListItem",
+    position: i + 1,
+    url: new URL(`/homes/${home.slug}`, siteOrigin).href,
+    name: home.data.title,
+    image: home.data.coverImage
+      ? new URL(home.data.coverImage, siteOrigin).href
+      : undefined,
+  })),
+};
+
+---
+
+<BaseLayout
+  title={`Homes with ${activeTag} | Utah Oasis Homes`}
+  description={`Browse ${totalCount} Utah Oasis Homes tagged "${activeTag}".`}
+>
+
+  <script
+    type="application/ld+json"
+    set:html={JSON.stringify(itemListJsonLd)}
+  />
+
+  <section>
+    <div class="section-header">
+      <div class="pill-eyebrow">Our Work</div>
+      <h1 class="section-title">Our Homes</h1>
+      <p class="section-subtitle">
+        Showing <strong>{totalCount}</strong> home{totalCount === 1 ? "" : "s"} tagged{" "}
+        <strong>{activeTag}</strong>.
+      </p>
+    </div>
+
+    {allTags.length ? (
+      <div class="homes-filters" aria-label="Filter homes">
+        <a class:list={["filter-chip"]} href="/homes">
+          All
+        </a>
+
+        {allTags.map((t: string) => {
+          const isActive = norm(t) === norm(activeTag);
+          return (
+            <a
+              class:list={["filter-chip", isActive && "is-active"]}
+              href={`/homes/tag/${toTagSlug(t)}`}
+              aria-current={isActive ? "page" : undefined}
+            >
+              {t}
+            </a>
+          );
+        })}
+      </div>
+    ) : null}
+
+    {filtered.length === 0 ? (
+      <p>No homes found for this tag.</p>
+    ) : (
+      <div class="homes-results">
+        {hasFeatured ? (
+          <>
+            <h2 class="homes-subhead">Featured</h2>
+            <div class="homes-grid homes-grid--featured">
+              {featuredHomes.map((home) => (
+                <HomeCard home={home} />
+              ))}
+            </div>
+          </>
+        ) : null}
+
+        {hasOther ? (
+          <>
+            <h2 class="homes-subhead">More Homes</h2>
+            <div class="homes-grid homes-grid--list">
+              {otherHomes.map((home) => (
+                <HomeCard home={home} />
+              ))}
+            </div>
+          </>
+        ) : null}
+      </div>
+    )}
+
+  </section>
+</BaseLayout>

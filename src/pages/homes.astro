@@ -52,12 +52,37 @@ const filtered = homes;
 const featuredHomes = filtered.filter((h) => h.data.featured);
 const otherHomes = filtered.filter((h) => !h.data.featured);
 
+// JSON-LD ItemList (matches display order: Featured first, then remaining homes)
+const siteOrigin = Astro.site?.toString() ?? Astro.url.origin;
+const orderedHomes = [...featuredHomes, ...otherHomes];
+
+const itemListJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "ItemList",
+  name: "Utah Oasis Homes – All Homes",
+  itemListElement: orderedHomes.map((home, i) => ({
+    "@type": "ListItem",
+    position: i + 1,
+    url: new URL(`/homes/${home.slug}`, siteOrigin).href,
+    name: home.data.title,
+    image: home.data.coverImage
+      ? new URL(home.data.coverImage, siteOrigin).href
+      : undefined,
+  })),
+};
+
 ---
 
 <BaseLayout
   title="Our Homes | Utah Oasis Homes"
   description="A curated selection of custom homes crafted by Utah Oasis Homes."
 >
+
+  <script
+    type="application/ld+json"
+    set:html={JSON.stringify(itemListJsonLd)}
+  />
+
   <section>
     <div class="section-header">
       <div class="pill-eyebrow">Our Work</div>
