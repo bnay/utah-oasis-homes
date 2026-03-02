@@ -630,11 +630,41 @@ section {
 .homes-grid {
   display: grid;
   gap: 1.5rem;
-}
+  width: 100%;
+  grid-template-columns: 1fr;
+  justify-content: start;
+  align-content: start;
+  justify-items: stretch;
+  align-items: stretch;}
 
 @media (min-width: 900px) {
   .homes-grid {
     grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+/* Tag pages: deterministic grids using explicit modifier classes (NOT nth-of-type). */
+@media (min-width: 900px) {
+  /* Featured grid: keep it card-sized; never a full-width banner look */
+  .homes-results .homes-grid--featured {
+    grid-template-columns: repeat(auto-fit, minmax(320px, 420px));
+    justify-content: start;
+  }
+
+  /* Default cap for cards on tag pages so single-result tags don't look like detail pages */
+  .homes-results .home-card {
+    width: 100%;
+    max-width: 420px;
+  }
+
+  /* More Homes grid: normal gallery feel */
+  .homes-results .homes-grid--list {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  /* In the 3-col list grid, allow cards to stretch naturally */
+  .homes-results .homes-grid--list .home-card {
+    max-width: none;
   }
 }
 
@@ -645,6 +675,7 @@ section {
   overflow: hidden;
   display: flex;
   flex-direction: column;
+  width: 100%;
 }
 
 .home-card a {
@@ -1064,6 +1095,19 @@ section {
   background:
     radial-gradient(circle at 0 0, rgba(56, 189, 248, 0.22), transparent 55%),
     rgba(15, 23, 42, 0.65);
+}
+
+.homes-filter-status {
+  margin: -0.5rem 0 1.25rem;
+  color: var(--muted);
+  font-size: 0.9rem;
+}
+
+.homes-filter-status a {
+  margin-left: 0.5rem;
+  color: #f9fafb;
+  text-decoration: underline;
+  text-underline-offset: 3px;
 }
 
 .homes-subhead {

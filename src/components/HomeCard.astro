@@ -1,5 +1,11 @@
 ---
-const { home } = Astro.props;
+import type { CollectionEntry } from "astro:content";
+
+type Props = {
+  home: CollectionEntry<"homes">;
+};
+
+const { home } = Astro.props as Props;
 ---
 
 <article class="home-card">
@@ -16,7 +22,7 @@ const { home } = Astro.props;
 
     {home.data.tags?.length ? (
       <div class="tag-row">
-        {home.data.tags.map((x) => <span class="tag">{x}</span>)}
+        {home.data.tags.map((x: string) => <span class="tag">{x}</span>)}
       </div>
     ) : null}
   </div>

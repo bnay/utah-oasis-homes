@@ -91,6 +91,31 @@ const itemListJsonLd = {
   })),
 };
 
+// JSON-LD Breadcrumbs
+const breadcrumbsJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  itemListElement: [
+    {
+      "@type": "ListItem",
+      position: 1,
+      name: "Home",
+      item: new URL("/", siteOrigin).href,
+    },
+    {
+      "@type": "ListItem",
+      position: 2,
+      name: "Our Homes",
+      item: new URL("/homes", siteOrigin).href,
+    },
+    {
+      "@type": "ListItem",
+      position: 3,
+      name: activeTag,
+      item: new URL(`/homes/tag/${tagSlug}`, siteOrigin).href,
+    },
+  ],
+};
 ---
 
 <BaseLayout
@@ -98,6 +123,10 @@ const itemListJsonLd = {
   description={`Browse ${totalCount} Utah Oasis Homes tagged "${activeTag}".`}
 >
 
+  <script
+    type="application/ld+json"
+    set:html={JSON.stringify(breadcrumbsJsonLd)}
+  />
   <script
     type="application/ld+json"
     set:html={JSON.stringify(itemListJsonLd)}
