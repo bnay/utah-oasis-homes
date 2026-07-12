@@ -65,6 +65,38 @@ if (!activeTag) {
   return Astro.redirect("/homes", 302);
 }
 
+// Tag-specific intro copy for SEO
+const TAG_INTRO: Record<string, string> = {
+  Modern:
+    "Clean lines, open floor plans, and intentional simplicity. Explore modern custom homes designed around light, proportion, and livable space.",
+  Contemporary:
+    "Current architectural design with warmth and balance. Browse contemporary homes that blend modern form with timeless materials and detail.",
+  "Indoor/Outdoor":
+    "Homes designed to open and breathe—large openings, patios, and seamless transitions between interior and exterior living spaces.",
+  "View Lot":
+    "Designs shaped by the landscape. Explore homes composed to frame mountain, valley, and horizon views while preserving privacy and flow.",
+  Pool:
+    "Outdoor living planned from the start. Browse homes where pools, patios, and entertaining spaces are integrated into the overall design.",
+  Courtyard:
+    "Private outdoor spaces at the heart of the home. Explore courtyard designs that bring in light, air, and a sense of retreat.",
+  Mountain:
+    "Homes designed for alpine environments—natural materials, strong forms, and layouts that respond to elevation, climate, and views.",
+  Desert:
+    "Architecture shaped for high sun and open landscapes. Explore desert homes designed with shade, orientation, and material performance in mind.",
+  Stone:
+    "Stone used with intention—adding permanence, texture, and structure. Browse homes where stone anchors both interior and exterior design.",
+  Timber:
+    "Warm wood tones and crafted detail. Explore homes that use timber to bring depth, texture, and natural character to the architecture.",
+  "Two Story":
+    "Vertical layouts that separate living and private spaces while maximizing lot efficiency, light, and long-range views.",
+  "Northern Utah":
+    "Homes built for Wasatch Front living—seasonal performance, mountain views, and everyday comfort across Northern Utah communities.",
+  "Southern Utah":
+    "Designs tailored to red rock landscapes—heat-aware planning, natural materials, and outdoor-focused living in Southern Utah.",
+};
+
+const tagIntro = TAG_INTRO[activeTag] ?? "";
+
 const filtered = homes.filter((h) => (h.data.tags ?? []).some((t) => norm(t) === norm(activeTag)));
 const featuredHomes = filtered.filter((h) => h.data.featured);
 const otherHomes = filtered.filter((h) => !h.data.featured);
@@ -133,6 +165,22 @@ const breadcrumbsJsonLd = {
   />
 
   <section>
+    <nav aria-label="Breadcrumb" class="breadcrumbs">
+      <ol class="breadcrumbs-list">
+        <li class="breadcrumbs-item">
+          <a href="/">Home</a>
+        </li>
+        <li class="breadcrumbs-separator">→</li>
+        <li class="breadcrumbs-item">
+          <a href="/homes">Our Homes</a>
+        </li>
+        <li class="breadcrumbs-separator">→</li>
+        <li class="breadcrumbs-item breadcrumbs-current">
+          {activeTag}
+        </li>
+      </ol>
+    </nav>
+
     <div class="section-header">
       <div class="pill-eyebrow">Our Work</div>
       <h1 class="section-title">Our Homes</h1>
@@ -140,6 +188,9 @@ const breadcrumbsJsonLd = {
         Showing <strong>{totalCount}</strong> home{totalCount === 1 ? "" : "s"} tagged{" "}
         <strong>{activeTag}</strong>.
       </p>
+      {tagIntro ? (
+        <p class="homes-tag-intro">{tagIntro}</p>
+      ) : null}
     </div>
 
     {allTags.length ? (

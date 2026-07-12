@@ -1,0 +1,125 @@
+---
+import BaseLayout from "../../../layouts/BaseLayout.astro";
+import HomeCard from "../../../components/HomeCard.astro";
+import { getCollection } from "astro:content";
+import { paginate } from "../../../lib/pagination";
+
+export const prerender = true;
+
+
+export async function getStaticPaths() {
+  const PER_PAGE = 12;
+  const homes = await getCollection("homes");
+  homes.sort((a: any, b: any) => {
+    const fa = a.data.featured ? 1 : 0;
+    const fb = b.data.featured ? 1 : 0;
+    if (fa !== fb) return fb - fa;
+
+    const oa = a.data.order ?? 9999;
+    const ob = b.data.order ?? 9999;
+    if (oa !== ob) return oa - ob;
+
+    return a.data.title.localeCompare(b.data.title);
+  });
+
+  const totalPages = Math.max(1, Math.ceil(homes.length / PER_PAGE));
+
+  // /homes is page 1; generate only pages 2..N here
+  return Array.from({ length: Math.max(0, totalPages - 1) }, (_, i) => ({
+    params: { page: String(i + 2) },
+  }));
+}
+
+const PER_PAGE = 12;
+const homes = await getCollection("homes");
+homes.sort((a: any, b: any) => {
+  const fa = a.data.featured ? 1 : 0;
+  const fb = b.data.featured ? 1 : 0;
+  if (fa !== fb) return fb - fa;
+
+  const oa = a.data.order ?? 9999;
+  const ob = b.data.order ?? 9999;
+  if (oa !== ob) return oa - ob;
+
+  return a.data.title.localeCompare(b.data.title);
+});
+
+const pageNum = Number(Astro.params.page);
+const p = paginate(homes, pageNum, PER_PAGE);
+
+const pageHomes = p.items;
+
+// SEO links
+const canonicalPath = `/homes/page/${p.page}`;
+const prevHref = p.hasPrev ? (p.prevPage === 1 ? "/homes" : `/homes/page/${p.prevPage}`) : undefined;
+const nextHref = p.hasNext ? `/homes/page/${p.nextPage}` : undefined;
+
+// JSON-LD
+const siteOrigin = Astro.site?.toString() ?? Astro.url.origin;
+
+const breadcrumbsJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  itemListElement: [
+    { "@type": "ListItem", position: 1, name: "Home", item: new URL("/", siteOrigin).href },
+    { "@type": "ListItem", position: 2, name: "Our Homes", item: new URL("/homes", siteOrigin).href },
+    { "@type": "ListItem", position: 3, name: `Page ${p.page}`, item: new URL(canonicalPath, siteOrigin).href },
+  ],
+};
+
+const itemListJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "ItemList",
+  name: `Utah Oasis Homes – All Homes (Page ${p.page})`,
+  itemListElement: pageHomes.map((home, i) => ({
+    "@type": "ListItem",
+    // absolute position in the full gallery
+    position: (p.page - 1) * p.perPage + i + 1,
+    url: new URL(`/homes/${home.slug}`, siteOrigin).href,
+    name: home.data.title,
+    image: home.data.coverImage ? new URL(home.data.coverImage, siteOrigin).href : undefined,
+  })),
+};
+---
+
+<BaseLayout
+  title={`Our Homes – Page ${p.page} | Utah Oasis Homes`}
+  description={`Browse page ${p.page} of our custom homes gallery.`}
+  canonicalPath={canonicalPath}
+  prevHref={prevHref}
+  nextHref={nextHref}
+>
+  <script type="application/ld+json" set:html={JSON.stringify(breadcrumbsJsonLd)} />
+  <script type="application/ld+json" set:html={JSON.stringify(itemListJsonLd)} />
+
+  <nav aria-label="Breadcrumb" class="breadcrumbs">
+    <ol class="breadcrumbs-list">
+      <li class="breadcrumbs-item"><a href="/">Home</a></li>
+      <li class="breadcrumbs-separator">→</li>
+      <li class="breadcrumbs-item"><a href="/homes">Our Homes</a></li>
+      <li class="breadcrumbs-separator">→</li>
+      <li class="breadcrumbs-item breadcrumbs-current">Page {p.page}</li>
+    </ol>
+  </nav>
+
+  <section>
+    <div class="section-header">
+      <div class="pill-eyebrow">Our Work</div>
+      <h1 class="section-title">Our Homes</h1>
+      <p class="section-subtitle">
+        Page <strong>{p.page}</strong> of <strong>{p.totalPages}</strong>.
+      </p>
+    </div>
+
+    <div class="homes-results">
+      <div class="homes-grid homes-grid--list">
+        {pageHomes.map((home) => <HomeCard home={home} />)}
+      </div>
+    </div>
+
+    <nav class="pager" aria-label="Pagination">
+      {prevHref ? <a class="pager-link" href={prevHref}>← Previous</a> : <span class="pager-spacer" />}
+      {nextHref ? <a class="pager-link" href={nextHref}>Next →</a> : <span class="pager-spacer" />}
+    </nav>
+  </section>
+</BaseLayout>

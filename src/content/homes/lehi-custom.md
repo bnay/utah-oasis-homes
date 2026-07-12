@@ -2,13 +2,13 @@
 title: Lehi Custom
 location: Lehi, Utah
 coverImage: /images/homes/lehi-custom-1.png
-tags: ["Two Story", "Northern Utah", "View Lot", "bri"]
+tags: ["Two Story", "Northern Utah", "View Lot"]
 order: 5
 
 gallery:
-  - /images/homes/desert-lehi-custom-1.png
-  - /images/homes/desert-lehi-custom-2.png
-  - /images/homes/desert-lehi-custom-3.png
+  - /images/homes/lehi-custom-1.png
+  - /images/homes/lehi-custom-2.png
+  - /images/homes/lehi-custom-3.png
   
 ---
 

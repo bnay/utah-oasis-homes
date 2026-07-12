@@ -4,9 +4,6 @@ import { getCollection } from "astro:content";
 import type { CollectionEntry } from "astro:content";
 import HomeCard from "../components/HomeCard.astro";
 
-// Keep this page SSR so we can 301 old query-string URLs to the new clean routes
-export const prerender = false;
-
 type Home = CollectionEntry<"homes">;
 
 const homes = await getCollection("homes");
@@ -107,7 +104,19 @@ const breadcrumbsJsonLd = {
   />
 
   <section>
-    <div class="section-header">
+    <nav aria-label="Breadcrumb" class="breadcrumbs">
+      <ol class="breadcrumbs-list">
+        <li class="breadcrumbs-item">
+          <a href="/">Home</a>
+        </li>
+        <li class="breadcrumbs-separator">→</li>
+        <li class="breadcrumbs-item breadcrumbs-current">
+          Our Homes
+        </li>
+      </ol>
+    </nav>
+
+      <div class="section-header">
       <div class="pill-eyebrow">Our Work</div>
       <h1 class="section-title">Our Homes</h1>
       <p class="section-subtitle">

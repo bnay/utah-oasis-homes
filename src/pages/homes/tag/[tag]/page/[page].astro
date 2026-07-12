@@ -1,0 +1,276 @@
+---
+import BaseLayout from "../../../../../layouts/BaseLayout.astro";
+import HomeCard from "../../../../../components/HomeCard.astro";
+import { getCollection } from "astro:content";
+import { paginate } from "../../../../../lib/pagination";
+
+export const prerender = true;
+
+export async function getStaticPaths() {
+  const PER_PAGE = 12;
+
+  // Keep this helper inside getStaticPaths().
+  const toTagSlug = (tag: unknown) =>
+    String(tag ?? "")
+      .trim()
+      .toLowerCase()
+      .replace(/&/g, "and")
+      .replace(/[^a-z0-9]+/g, "-")
+      .replace(/(^-|-$)/g, "");
+
+  const homes = await getCollection("homes");
+
+  homes.sort((a, b) => {
+    const featuredA = a.data.featured ? 1 : 0;
+    const featuredB = b.data.featured ? 1 : 0;
+
+    if (featuredA !== featuredB) {
+      return featuredB - featuredA;
+    }
+
+    const orderA = a.data.order ?? 9999;
+    const orderB = b.data.order ?? 9999;
+
+    if (orderA !== orderB) {
+      return orderA - orderB;
+    }
+
+    return a.data.title.localeCompare(b.data.title);
+  });
+
+  const tags = Array.from(
+    new Set(homes.flatMap((home) => home.data.tags ?? []))
+  );
+
+  const paths = [];
+
+  for (const tag of tags) {
+    const tagSlug = toTagSlug(tag);
+
+    const taggedHomes = homes.filter((home) =>
+      (home.data.tags ?? []).some(
+        (homeTag) => toTagSlug(homeTag) === tagSlug
+      )
+    );
+
+    const totalPages = Math.ceil(taggedHomes.length / PER_PAGE);
+
+    // Page 1 is handled by /homes/tag/[tag].
+    // Generate only pages 2 through N here.
+    for (let page = 2; page <= totalPages; page++) {
+      paths.push({
+        params: {
+          tag: tagSlug,
+          page: String(page),
+        },
+        props: {
+          activeTag: tag,
+        },
+      });
+    }
+  }
+
+  return paths;
+}
+
+const PER_PAGE = 12;
+
+const normalizeTag = (tag: unknown) =>
+  String(tag ?? "")
+    .replace(/\u200B/g, "")
+    .trim()
+    .toLowerCase();
+
+const toTagSlug = (tag: unknown) =>
+  String(tag ?? "")
+    .trim()
+    .toLowerCase()
+    .replace(/&/g, "and")
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/(^-|-$)/g, "");
+
+const { activeTag } = Astro.props;
+
+const tagSlug = Astro.params.tag;
+const pageNumber = Number(Astro.params.page);
+
+const homes = await getCollection("homes");
+
+homes.sort((a, b) => {
+  const featuredA = a.data.featured ? 1 : 0;
+  const featuredB = b.data.featured ? 1 : 0;
+
+  if (featuredA !== featuredB) {
+    return featuredB - featuredA;
+  }
+
+  const orderA = a.data.order ?? 9999;
+  const orderB = b.data.order ?? 9999;
+
+  if (orderA !== orderB) {
+    return orderA - orderB;
+  }
+
+  return a.data.title.localeCompare(b.data.title);
+});
+
+const taggedHomes = homes.filter((home) =>
+  (home.data.tags ?? []).some(
+    (tag) => normalizeTag(tag) === normalizeTag(activeTag)
+  )
+);
+
+const pagination = paginate(taggedHomes, pageNumber, PER_PAGE);
+const pageHomes = pagination.items;
+
+const canonicalPath =
+  `/homes/tag/${tagSlug}/page/${pagination.page}`;
+
+const prevHref = pagination.hasPrev
+  ? pagination.prevPage === 1
+    ? `/homes/tag/${tagSlug}`
+    : `/homes/tag/${tagSlug}/page/${pagination.prevPage}`
+  : undefined;
+
+const nextHref = pagination.hasNext
+  ? `/homes/tag/${tagSlug}/page/${pagination.nextPage}`
+  : undefined;
+
+const siteOrigin = Astro.site?.toString() ?? Astro.url.origin;
+
+const breadcrumbsJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  itemListElement: [
+    {
+      "@type": "ListItem",
+      position: 1,
+      name: "Home",
+      item: new URL("/", siteOrigin).href,
+    },
+    {
+      "@type": "ListItem",
+      position: 2,
+      name: "Our Homes",
+      item: new URL("/homes", siteOrigin).href,
+    },
+    {
+      "@type": "ListItem",
+      position: 3,
+      name: activeTag,
+      item: new URL(`/homes/tag/${tagSlug}`, siteOrigin).href,
+    },
+    {
+      "@type": "ListItem",
+      position: 4,
+      name: `Page ${pagination.page}`,
+      item: new URL(canonicalPath, siteOrigin).href,
+    },
+  ],
+};
+
+const itemListJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "ItemList",
+  name: `Utah Oasis Homes – ${activeTag} Homes, Page ${pagination.page}`,
+  itemListElement: pageHomes.map((home, index) => ({
+    "@type": "ListItem",
+    position:
+      (pagination.page - 1) * pagination.perPage + index + 1,
+    url: new URL(`/homes/${home.slug}`, siteOrigin).href,
+    name: home.data.title,
+    image: home.data.coverImage
+      ? new URL(home.data.coverImage, siteOrigin).href
+      : undefined,
+  })),
+};
+---
+
+<BaseLayout
+  title={`${activeTag} Homes – Page ${pagination.page} | Utah Oasis Homes`}
+  description={`Browse page ${pagination.page} of Utah Oasis Homes tagged "${activeTag}".`}
+  canonicalPath={canonicalPath}
+  prevHref={prevHref}
+  nextHref={nextHref}
+>
+  <script
+    type="application/ld+json"
+    set:html={JSON.stringify(breadcrumbsJsonLd)}
+  />
+
+  <script
+    type="application/ld+json"
+    set:html={JSON.stringify(itemListJsonLd)}
+  />
+
+  <section>
+    <nav aria-label="Breadcrumb" class="breadcrumbs">
+      <ol class="breadcrumbs-list">
+        <li class="breadcrumbs-item">
+          <a href="/">Home</a>
+        </li>
+
+        <li class="breadcrumbs-separator">→</li>
+
+        <li class="breadcrumbs-item">
+          <a href="/homes">Our Homes</a>
+        </li>
+
+        <li class="breadcrumbs-separator">→</li>
+
+        <li class="breadcrumbs-item">
+          <a href={`/homes/tag/${tagSlug}`}>{activeTag}</a>
+        </li>
+
+        <li class="breadcrumbs-separator">→</li>
+
+        <li class="breadcrumbs-item breadcrumbs-current">
+          Page {pagination.page}
+        </li>
+      </ol>
+    </nav>
+
+    <div class="section-header">
+      <div class="pill-eyebrow">Our Work</div>
+
+      <h1 class="section-title">{activeTag} Homes</h1>
+
+      <p class="section-subtitle">
+        Page <strong>{pagination.page}</strong> of{" "}
+        <strong>{pagination.totalPages}</strong>.
+      </p>
+    </div>
+
+    <div class="homes-results">
+      <div class="homes-grid homes-grid--list">
+        {pageHomes.map((home) => (
+          <HomeCard home={home} />
+        ))}
+      </div>
+    </div>
+
+    {pagination.totalPages > 1 ? (
+      <nav class="pager" aria-label="Pagination">
+        {prevHref ? (
+          <a class="pager-link" href={prevHref}>
+            ← Previous
+          </a>
+        ) : (
+          <span class="pager-spacer" />
+        )}
+
+        <span class="pager-status">
+          Page {pagination.page} of {pagination.totalPages}
+        </span>
+
+        {nextHref ? (
+          <a class="pager-link" href={nextHref}>
+            Next →
+          </a>
+        ) : (
+          <span class="pager-spacer" />
+        )}
+      </nav>
+    ) : null}
+  </section>
+</BaseLayout>

@@ -2,8 +2,8 @@
 title: Alpine Custom
 location: Draper, Utah
 coverImage: /images/homes/alpine-custom.png
-tags: ["Modern", "View Lot", "Indoor/Outdoor", "Contemporary", "Northern Utah", "bri"]
-featured: True
+tags: ["Modern", "View Lot", "Indoor/Outdoor", "Contemporary", "Northern Utah"]
+featured: true
 order: 1
 
 gallery:

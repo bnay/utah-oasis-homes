@@ -1,6 +1,5 @@
 ---
 
-
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
 import '../styles/global.css';
@@ -9,21 +8,36 @@ interface Props {
   title?: string;
   description?: string;
   robots?: string;
+  canonicalPath?: string; // e.g. "/homes/page/2"
+  prevHref?: string;      // e.g. "/homes"
+  nextHref?: string;      // e.g. "/homes/page/3"
 }
 
 const {
   title = 'Utah Oasis Homes – Custom Luxury Homes in Utah',
   description = 'Custom luxury homes that feel like private resorts, crafted for Utah’s most inspiring landscapes.',
   robots = "index,follow",
+    canonicalPath,
+    prevHref,
+    nextHref,
 } = Astro.props;
 
 // Canonical URL:
-// - Prefer absolute (requires `site:` in astro.config.*)
-// - Fallback to path-only in dev to avoid crashing when Astro.site is undefined
-const canonical = new URL(Astro.url);
+// - Default: current URL (hardened: strips query/hash)
+// - Optional override: canonicalPath (absolute via Astro.site when available)
+const siteOrigin = Astro.site?.toString() ?? Astro.url.origin;
+
+const canonical = canonicalPath
+  ? new URL(canonicalPath, siteOrigin)
+  : new URL(Astro.url);
+
 canonical.search = "";
 canonical.hash = "";
 const canonicalUrl = canonical.href;
+
+// Prev/Next (absolute for <head> links)
+const prevUrl = prevHref ? new URL(prevHref, siteOrigin).href : null;
+const nextUrl = nextHref ? new URL(nextHref, siteOrigin).href : null;
 
 ---
 
@@ -50,7 +64,8 @@ const canonicalUrl = canonical.href;
     <meta name="twitter:image" content="/branding/uoh-og.png" />
     
     <link rel="canonical" href={canonicalUrl} />
-  </head>
+    {prevUrl ? <link rel="prev" href={prevUrl} /> : null}
+    {nextUrl ? <link rel="next" href={nextUrl} /> : null}</head>
 
   <body class="site-shell">
     <header class="site-header">
