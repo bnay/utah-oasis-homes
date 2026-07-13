@@ -1,78 +1,383 @@
 ---
-import BaseLayout from '../layouts/BaseLayout.astro';
+import BaseLayout from "../layouts/BaseLayout.astro";
 ---
 
-<BaseLayout title="Start Your Project – Utah Oasis Homes">
-  <section class="section">
-    <div class="section-header">
-      <h1 class="section-title">Start Your Project</h1>
-      <p class="section-subtitle">
-        Share a few details about your vision, and we’ll follow up to schedule a conversation.
+<BaseLayout
+  title="Start Your Home | Utah Oasis Homes"
+  description="Tell Utah Oasis Homes about your custom home vision, desired location, budget, and timeline. Begin your personalized home-building consultation."
+  canonicalPath="/start"
+>
+  <section class="start-hero" aria-labelledby="start-page-title">
+    <div class="start-hero-content">
+      <div class="pill-eyebrow">Your vision starts here</div>
+
+      <h1 id="start-page-title" class="start-hero-title">
+        Start Your Dream Home
+      </h1>
+
+      <p class="start-hero-lead">
+        Every remarkable home begins with a conversation.
+      </p>
+      <p class="start-hero-lead">
+        Whether you're still collecting ideas, already own land, or are ready to build, we're here to guide you through every step of the journey.
       </p>
     </div>
 
-    <div class="card">
-      <form
-        method="POST"
-        action="https://formspree.io/f/your-form-id"
-        style="display: grid; gap: 1rem; max-width: 520px;"
-      >
-        <div>
-          <label for="name" style="font-size: 0.85rem;">Name</label>
-          <input
-            id="name"
-            name="name"
-            required
-            style="width: 100%; padding: 0.6rem 0.7rem; margin-top: 0.2rem; border-radius: 8px; border: 1px solid var(--border-subtle); background: #101117; color: var(--text);"
-          />
+    <aside class="start-next-card" aria-labelledby="what-happens-next">
+      <h2 id="what-happens-next" class="start-next-title">
+        What You Can Expect
+      </h2>
+
+      <ol class="start-next-list">
+        <li>
+          <span class="start-next-number" aria-hidden="true">1</span>
+          <div>
+            <strong>Let's Get Acquainted</strong>
+            <span>
+              We'll learn about your vision, answer your questions, and understand
+              what matters most to you.
+            </span>
+          </div>
+        </li>
+
+        <li>
+          <span class="start-next-number" aria-hidden="true">2</span>
+          <div>
+            <strong>Explore the Possibilities</strong>
+            <span>
+              Together we'll discuss your location, lifestyle, budget, timeline, and
+              the ideas you're considering.
+            </span>
+          </div>
+        </li>
+
+        <li>
+          <span class="start-next-number" aria-hidden="true">3</span>
+          <div>
+            <strong>Create a Plan Together</strong>
+            <span>
+              If we're a great fit, we'll outline the next steps and begin planning
+              your custom home journey.
+            </span>
+          </div>
+        </li>
+      </ol>
+
+    </aside>
+  </section>
+
+  <section
+    class="start-form-section"
+    aria-labelledby="consultation-form-title"
+  >
+    <div class="start-form-heading">
+      <div>
+        <div class="pill-eyebrow">Tell us about your project</div>
+
+        <h2 id="consultation-form-title" class="start-form-title">
+           Let's Start Planning Your Home
+        </h2>
+
+        <p class="start-form-intro">
+          Share what you know today. It is perfectly fine if some details are
+          still undecided.
+        </p>
+
+        <p class="start-form-trust">
+          <strong>No obligation. No high-pressure sales.</strong>
+          We simply want to understand your vision, answer your questions, and determine
+          whether we're the right builder for your project.
+        </p>        
+      </div>
+
+      <p class="start-required-note">
+        <span aria-hidden="true">*</span> Required fields
+      </p>
+    </div>
+
+    <form
+      class="start-form"
+      method="POST"
+      action="https://formspree.io/f/your-form-id"
+    >
+      <input
+        type="hidden"
+        name="_subject"
+        value="New Utah Oasis Homes consultation request"
+      />
+
+      <div class="form-honeypot" aria-hidden="true">
+        <label for="company-website">
+          Leave this field blank
+        </label>
+
+        <input
+          id="company-website"
+          name="company_website"
+          type="text"
+          tabindex="-1"
+          autocomplete="off"
+        />
+      </div>
+
+      <fieldset class="form-section">
+        <legend>Your information</legend>
+
+        <div class="form-grid">
+          <div class="form-field">
+            <label for="name">
+              Name <span aria-hidden="true">*</span>
+            </label>
+
+            <input
+              id="name"
+              name="name"
+              type="text"
+              autocomplete="name"
+              required
+              minlength="2"
+              maxlength="100"
+            />
+
+            <span class="form-help">
+              Your first and last name
+            </span>
+          </div>
+
+          <div class="form-field">
+            <label for="email">
+              Email <span aria-hidden="true">*</span>
+            </label>
+
+            <input
+              id="email"
+              name="email"
+              type="email"
+              autocomplete="email"
+              required
+              maxlength="150"
+            />
+
+            <span class="form-help">
+              We will use this to respond to your request
+            </span>
+          </div>
+
+          <div class="form-field">
+            <label for="phone">
+              Phone <span aria-hidden="true">*</span>
+            </label>
+
+            <input
+              id="phone"
+              name="phone"
+              type="tel"
+              autocomplete="tel"
+              inputmode="tel"
+              required
+              maxlength="30"
+              placeholder="(801) 555-1234"
+            />
+          </div>
+
+          <div class="form-field">
+            <label for="contact-method">
+              Preferred contact method
+              <span aria-hidden="true">*</span>
+            </label>
+
+            <select
+              id="contact-method"
+              name="preferred_contact_method"
+              required
+            >
+              <option value="" selected disabled>
+                Select one
+              </option>
+              <option value="Phone">Phone</option>
+              <option value="Text message">Text message</option>
+              <option value="Email">Email</option>
+              <option value="No preference">No preference</option>
+            </select>
+          </div>
         </div>
-        <div>
-          <label for="email" style="font-size: 0.85rem;">Email</label>
-          <input
-            id="email"
-            name="email"
-            type="email"
-            required
-            style="width: 100%; padding: 0.6rem 0.7rem; margin-top: 0.2rem; border-radius: 8px; border: 1px solid var(--border-subtle); background: #101117; color: var(--text);"
-          />
+      </fieldset>
+
+      <fieldset class="form-section">
+        <legend>Your project</legend>
+
+        <div class="form-grid">
+          <div class="form-field">
+            <label for="location">
+              Desired build location
+              <span aria-hidden="true">*</span>
+            </label>
+
+            <input
+              id="location"
+              name="build_location"
+              type="text"
+              required
+              maxlength="150"
+              placeholder="City, community, or general area"
+            />
+
+            <span class="form-help">
+              It is fine if the location is not final
+            </span>
+          </div>
+
+          <div class="form-field">
+            <label for="project-type">
+              Project type <span aria-hidden="true">*</span>
+            </label>
+
+            <select
+              id="project-type"
+              name="project_type"
+              required
+            >
+              <option value="" selected disabled>
+                Select one
+              </option>
+              <option value="Primary residence">
+                Primary residence
+              </option>
+              <option value="Vacation or second home">
+                Vacation or second home
+              </option>
+              <option value="Investment property">
+                Investment property
+              </option>
+              <option value="Major remodel">
+                Major remodel
+              </option>
+              <option value="Not sure yet">
+                Not sure yet
+              </option>
+            </select>
+          </div>
+
+          <div class="form-field">
+            <label for="timeline">
+              Approximate timeline
+              <span aria-hidden="true">*</span>
+            </label>
+
+            <select
+              id="timeline"
+              name="timeline"
+              required
+            >
+              <option value="" selected disabled>
+                Select one
+              </option>
+              <option value="Ready to begin">
+                Ready to begin
+              </option>
+              <option value="Within 3 months">
+                Within 3 months
+              </option>
+              <option value="3 to 6 months">
+                3 to 6 months
+              </option>
+              <option value="6 to 12 months">
+                6 to 12 months
+              </option>
+              <option value="More than 12 months">
+                More than 12 months
+              </option>
+              <option value="Still exploring">
+                Still exploring
+              </option>
+            </select>
+          </div>
+
+          <div class="form-field">
+            <label for="budget">
+              Approximate construction budget
+            </label>
+
+            <select
+              id="budget"
+              name="budget_range"
+            >
+              <option value="" selected>
+                Prefer not to say
+              </option>
+              <option value="Under $750,000">
+                Under $750,000
+              </option>
+              <option value="$750,000 to $1 million">
+                $750,000 to $1 million
+              </option>
+              <option value="$1 million to $1.5 million">
+                $1 million to $1.5 million
+              </option>
+              <option value="$1.5 million to $2 million">
+                $1.5 million to $2 million
+              </option>
+              <option value="$2 million or more">
+                $2 million or more
+              </option>
+              <option value="Not sure yet">
+                Not sure yet
+              </option>
+            </select>
+
+            <span class="form-help">
+              Excluding the cost of land
+            </span>
+          </div>
         </div>
-        <div>
-          <label for="phone" style="font-size: 0.85rem;">Phone</label>
-          <input
-            id="phone"
-            name="phone"
-            style="width: 100%; padding: 0.6rem 0.7rem; margin-top: 0.2rem; border-radius: 8px; border: 1px solid var(--border-subtle); background: #101117; color: var(--text);"
-          />
-        </div>
-        <div>
-          <label for="location" style="font-size: 0.85rem;">Project location / lot</label>
-          <input
-            id="location"
-            name="location"
-            style="width: 100%; padding: 0.6rem 0.7rem; margin-top: 0.2rem; border-radius: 8px; border: 1px solid var(--border-subtle); background: #101117; color: var(--text);"
-          />
-        </div>
-        <div>
-          <label for="budget" style="font-size: 0.85rem;">Estimated budget</label>
-          <input
-            id="budget"
-            name="budget"
-            style="width: 100%; padding: 0.6rem 0.7rem; margin-top: 0.2rem; border-radius: 8px; border: 1px solid var(--border-subtle); background: #101117; color: var(--text);"
-          />
-        </div>
-        <div>
-          <label for="message" style="font-size: 0.85rem;">Tell us about your project</label>
+
+        <div class="form-field form-field-full">
+          <label for="message">
+            Tell us about your vision
+            <span aria-hidden="true">*</span>
+          </label>
+
           <textarea
             id="message"
-            name="message"
-            rows={5}
-            style="width: 100%; padding: 0.6rem 0.7rem; margin-top: 0.2rem; border-radius: 8px; border: 1px solid var(--border-subtle); background: #101117; color: var(--text); resize: vertical;"
+            name="project_description"
+            rows={7}
+            required
+            minlength="20"
+            maxlength="3000"
+            placeholder="Tell us about the home you are imagining, the features that matter most, whether you own land, and anything else you would like us to know."
           ></textarea>
+
+          <span class="form-help">
+            A few sentences is plenty
+          </span>
         </div>
-        <button type="submit" class="btn btn-primary" style="justify-self: flex-start;">
-          Submit
+      </fieldset>
+
+      <div class="form-consent">
+        <input
+          id="consent"
+          name="contact_consent"
+          type="checkbox"
+          value="Yes"
+          required
+        />
+
+        <label for="consent">
+          I agree that Utah Oasis Homes may contact me by phone, text, or
+          email regarding my project request.
+          <span aria-hidden="true">*</span>
+        </label>
+      </div>
+
+      <div class="form-submit-row">
+        <button type="submit" class="btn btn-primary start-submit">
+          Start My Home Journey
         </button>
-      </form>
-    </div>
+
+        <p class="form-privacy-note">
+          Your information will only be used to respond to your inquiry.
+        </p>
+      </div>
+    </form>
   </section>
 </BaseLayout>
