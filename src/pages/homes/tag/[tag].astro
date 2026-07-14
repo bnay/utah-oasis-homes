@@ -71,7 +71,7 @@ const TAG_INTRO: Record<string, string> = {
     "Clean lines, open floor plans, and intentional simplicity. Explore modern custom homes designed around light, proportion, and livable space.",
   Contemporary:
     "Current architectural design with warmth and balance. Browse contemporary homes that blend modern form with timeless materials and detail.",
-  "Indoor/Outdoor":
+  "Indoor-Outdoor":
     "Homes designed to open and breathe—large openings, patios, and seamless transitions between interior and exterior living spaces.",
   "View Lot":
     "Designs shaped by the landscape. Explore homes composed to frame mountain, valley, and horizon views while preserving privacy and flow.",
@@ -87,7 +87,7 @@ const TAG_INTRO: Record<string, string> = {
     "Stone used with intention—adding permanence, texture, and structure. Browse homes where stone anchors both interior and exterior design.",
   Timber:
     "Warm wood tones and crafted detail. Explore homes that use timber to bring depth, texture, and natural character to the architecture.",
-  "Two Story":
+  "Two-Story":
     "Vertical layouts that separate living and private spaces while maximizing lot efficiency, light, and long-range views.",
   "Northern Utah":
     "Homes built for Wasatch Front living—seasonal performance, mountain views, and everyday comfort across Northern Utah communities.",
@@ -151,9 +151,13 @@ const breadcrumbsJsonLd = {
 ---
 
 <BaseLayout
-  title={`Homes with ${activeTag} | Utah Oasis Homes`}
-  description={`Browse ${totalCount} Utah Oasis Homes tagged "${activeTag}".`}
->
+  title={`${activeTag} Homes | Utah Oasis Homes`}
+  description={
+    tagIntro ||
+    `Explore ${activeTag.toLowerCase()} custom homes by Utah Oasis Homes.`
+  }
+  canonicalPath={`/homes/tag/${tagSlug}`}
+>s
 
   <script
     type="application/ld+json"

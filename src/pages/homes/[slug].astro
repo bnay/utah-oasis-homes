@@ -18,6 +18,10 @@ type Props = {
 const { home } = Astro.props as Props;
 const { title, location, coverImage, tags } = home.data;
 
+const homeDescription = home.body
+  .replace(/\s+/g, " ")
+  .trim();
+
 const { Content } = await render(home);
 
 const galleryImages = (home.data.gallery ?? []).filter(
@@ -46,7 +50,9 @@ const nextHome = idx >= 0 && idx < allHomes.length - 1 ? allHomes[idx + 1] : nul
 
 <BaseLayout
   title={`${title} | Utah Oasis Homes`}
-  description={`Explore ${title}, a custom home in ${location}.`}
+  description={homeDescription}
+  canonicalPath={`/homes/${home.slug}`}
+  socialImage={coverImage}
 >
   <section class="home-detail">
     <a class="home-back" href="/homes">← Back to Our Homes</a>

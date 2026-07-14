@@ -9,15 +9,17 @@ interface Props {
   description?: string;
   robots?: string;
   canonicalPath?: string; // e.g. "/homes/page/2"
+  socialImage?: string;
   prevHref?: string;      // e.g. "/homes"
   nextHref?: string;      // e.g. "/homes/page/3"
 }
 
 const {
-  title = 'Utah Oasis Homes – Custom Luxury Homes in Utah',
-  description = 'Custom luxury homes that feel like private resorts, crafted for Utah’s most inspiring landscapes.',
+    title = 'Utah Oasis Homes | Custom Homes in Utah',
+    description = 'Custom homes shaped by the way you live, the people you gather, and the Utah landscape outside your door.',
   robots = "index,follow",
     canonicalPath,
+    socialImage = "/branding/uoh-og.png",
     prevHref,
     nextHref,
 } = Astro.props;
@@ -34,6 +36,7 @@ const canonical = canonicalPath
 canonical.search = "";
 canonical.hash = "";
 const canonicalUrl = canonical.href;
+const socialImageUrl = new URL(socialImage, siteOrigin).href;
 
 // Prev/Next (absolute for <head> links)
 const prevUrl = prevHref ? new URL(prevHref, siteOrigin).href : null;
@@ -54,14 +57,14 @@ const nextUrl = nextHref ? new URL(nextHref, siteOrigin).href : null;
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
     <meta property="og:type" content="website" />
-    <meta property="og:image" content="/branding/uoh-og.png" />
+    <meta property="og:image" content={socialImageUrl} />
     <meta property="og:url" content={canonicalUrl} />
     <meta property="og:site_name" content="Utah Oasis Homes" />
 
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content={title} />
     <meta name="twitter:description" content={description} />
-    <meta name="twitter:image" content="/branding/uoh-og.png" />
+    <meta name="twitter:image" content={socialImageUrl} />
     
     <link rel="canonical" href={canonicalUrl} />
     {prevUrl ? <link rel="prev" href={prevUrl} /> : null}
