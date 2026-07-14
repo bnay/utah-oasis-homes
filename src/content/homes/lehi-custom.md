@@ -2,7 +2,7 @@
 title: Lehi Custom
 location: Lehi, Utah
 coverImage: /images/homes/lehi-custom-1.png
-tags: ["Two Story", "Northern Utah", "View Lot"]
+tags: ["Two-Story", "Northern Utah", "View Lot"]
 order: 5
 
 gallery:
@@ -12,4 +12,4 @@ gallery:
   
 ---
 
-Equisite two-story custom home in the heart of Silicon Slopes.
+A refined two-story home designed for comfortable family living in the heart of Silicon Slopes.

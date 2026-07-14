@@ -13,4 +13,4 @@ gallery:
   
 ---
 
-A desert-forward contemporary build with shaded courtyards, clean lines, and elevated material selection.
+A contemporary desert home with shaded courtyards, clean lines, and materials chosen to complement the surrounding landscape.

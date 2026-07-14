@@ -829,7 +829,8 @@ section {
   justify-content: start;
   align-content: start;
   justify-items: stretch;
-  align-items: stretch;}
+  align-items: stretch;
+}
 
 @media (min-width: 900px) {
   .homes-grid {
@@ -990,30 +991,6 @@ section {
 
 .home-hero-description p {
   margin: 0;
-}
-
-.home-content {
-  margin-top: 1.5rem;
-  max-width: 820px;
-  color: var(--muted);
-  line-height: 1.8;
-}
-
-.home-content :where(h2, h3) {
-  color: var(--text);
-  margin-top: 1.6rem;
-  margin-bottom: 0.6rem;
-  line-height: 1.25;
-}
-
-.home-content :where(p) {
-  margin: 0.9rem 0;
-}
-
-.home-content :where(a) {
-  color: inherit;
-  text-decoration: underline;
-  text-underline-offset: 0.18em;
 }
 
 .home-gallery {
@@ -1751,6 +1728,10 @@ section {
 /* ================= MOBILE HEADER OVERRIDES ================= */
 
 @media (max-width: 720px) {
+    .home-detail {
+    margin-top: 2.25rem;
+  }
+
   .site-header {
     padding-top: 0.65rem;
   }

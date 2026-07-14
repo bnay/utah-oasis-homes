@@ -11,4 +11,4 @@ gallery:
     
 ---
 
-Exquisite custom home combining the best in family living and guest entertainment.
+A spacious custom home designed for relaxed family living, generous gathering spaces, and effortless entertaining.

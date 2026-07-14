@@ -2,7 +2,7 @@
 title: Alpine Custom
 location: Draper, Utah
 coverImage: /images/homes/alpine-custom.png
-tags: ["Modern", "View Lot", "Indoor/Outdoor", "Contemporary", "Northern Utah"]
+tags: ["Contemporary", "View Lot", "Indoor-Outdoor", "Northern Utah"]
 featured: true
 order: 1
 
@@ -13,4 +13,4 @@ gallery:
 
 ---
 
-A modern hillside home with expansive glazing, warm natural finishes, and resort-style outdoor living.
+A modern hillside home with expansive glazing, warm natural finishes, and outdoor spaces designed around the view.
