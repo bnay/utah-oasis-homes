@@ -20,6 +20,10 @@ const { title, location, coverImage, tags } = home.data;
 
 const { Content } = await render(home);
 
+const galleryImages = (home.data.gallery ?? []).filter(
+  (src) => src !== coverImage
+);
+
 // Build an ordered list for prev/next navigation
 const allHomes = await getCollection("homes");
 allHomes.sort((a, b) => {
@@ -56,6 +60,10 @@ const nextHome = idx >= 0 && idx < allHomes.length - 1 ? allHomes[idx + 1] : nul
         <h1 class="home-title">{title}</h1>
         <div class="home-location">{location}</div>
 
+        <div class="home-hero-description">
+          <Content />
+        </div>
+
         {tags?.length ? (
           <div class="tag-row home-tags">
             {tags.map((t) => (
@@ -66,16 +74,20 @@ const nextHome = idx >= 0 && idx < allHomes.length - 1 ? allHomes[idx + 1] : nul
       </div>
     </header>
 
-    <article class="home-content">
+    <!-- <article class="home-content">
       <Content />
-    </article>
+    </article> -->
 
-    {home.data.gallery?.length ? (
+    {galleryImages.length ? (
       <section class="home-gallery" aria-label="Home gallery">
         <h2 class="home-gallery-title">Gallery</h2>
         <div class="home-gallery-grid">
-          {home.data.gallery.map((src) => (
-            <img src={src} alt={`${title} gallery image`} loading="lazy" />
+          {galleryImages.map((src, index) => (
+            <img
+              src={src}
+              alt={`${title} — additional view ${index + 1}`}
+              loading="lazy"
+            />
           ))}
         </div>
       </section>

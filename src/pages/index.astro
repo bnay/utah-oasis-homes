@@ -1,9 +1,13 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
-import { homes } from '../data/homes';
+import { getCollection } from 'astro:content';
 import { testimonials } from '../data/testimonials';
 
-const featuredHomes = homes.slice(0, 3);
+const featuredHomes = (await getCollection('homes'))
+  .filter((home) => home.data.featured)
+  .sort((a, b) => a.data.order - b.data.order)
+  .slice(0, 3);
+  
 const featuredTestimonials = testimonials.slice(0, 2);
 ---
 
@@ -46,18 +50,17 @@ const featuredTestimonials = testimonials.slice(0, 2);
       <h1 class="hero-title">Every Home Should Feel Like an Oasis.</h1>
 
       <p class="hero-subtitle">
-        Custom luxury homes that balance modern architecture with Utah’s most dramatic landscapes —
-        designed as private retreats for the way you live, gather, and unwind.
+        A home shaped around the way you live, the people you gather, and the landscape outside your
+        door—thoughtfully designed and carefully built to feel distinctly yours.
       </p>
 
       <div class="hero-ctas">
         <a href="/homes" class="btn btn-primary">View Our Homes</a>
-        <a href="/start" class="btn btn-ghost">Start Your Project</a>
+        <a href="/start" class="btn btn-ghost">Start Your Home</a>
       </div>
 
       <div class="hero-meta">
         <span><strong>Southern Utah &amp; Wasatch Front</strong></span>
-        <span>Resort-inspired custom homes • Indoor–outdoor living • Pool &amp; view-centric design</span>
       </div>
     </div>
   </div>
@@ -65,17 +68,17 @@ const featuredTestimonials = testimonials.slice(0, 2);
 
   <section class="section" id="differentiators">
     <div class="section-header">
-      <h2 class="section-title">What Makes Utah Oasis Different</h2>
+      <h2 class="section-title">A More Thoughtful Way to Build</h2>
       <p class="section-subtitle">
-        A building experience centered on calm, clarity, and homes that feel like true retreats.
+        Clear guidance, careful decisions, and a home shaped around the way you want to live.
       </p>
     </div>
     <div class="card-grid">
       <article class="card">
-        <h3>Resort-Inspired Design</h3>
+        <h3>Designed for Everyday Escape</h3>
         <p>
-          Homes that feel like destination retreats—pools, courtyards, and seamless indoor–outdoor
-          living.
+          Pools, courtyards, and seamless indoor–outdoor spaces that make home feel like the place you
+          would rather be.
         </p>
       </article>
       <article class="card">
@@ -83,12 +86,12 @@ const featuredTestimonials = testimonials.slice(0, 2);
         <p>Desert cliffs, mountain views, and natural light drive every design decision.</p>
       </article>
       <article class="card">
-        <h3>Concierge-Level Process</h3>
-        <p>A guided, transparent experience from first sketch to final walkthrough.</p>
+        <h3>Guided from Start to Finish</h3>
+        <p>Clear communication, thoughtful guidance, and steady progress at every stage.</p>
       </article>
       <article class="card">
-        <h3>Timeless Craftsmanship</h3>
-        <p>Materials and details selected to age beautifully for decades.</p>
+        <h3>Crafted for the Long Term</h3>
+        <p>Thoughtful materials, careful detailing, and workmanship designed to endure.</p>
       </article>
     </div>
   </section>
@@ -96,21 +99,33 @@ const featuredTestimonials = testimonials.slice(0, 2);
   <section class="section" id="featured-homes">
     <div class="section-header">
       <h2 class="section-title">Selected Homes</h2>
-      <p class="section-subtitle">A glimpse at recent Utah Oasis residences.</p>
+      <p class="section-subtitle">
+        A collection of homes shaped by their setting, their owners, and the way each family lives.
+      </p>
     </div>
     <div class="card-grid">
       {featuredHomes.map((home) => (
-        <article class="card">
-          <h3>{home.name}</h3>
-          <p style="font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.12em;">
-            {home.location}
-          </p>
-          <p>{home.headline}</p>
+        <article class="card featured-home-card">
+          <a href={`/homes/${home.id}`} class="featured-home-link">
+            <div class="featured-home-media">
+              <img
+                src={home.data.coverImage}
+                alt={`${home.data.title} in ${home.data.location}`}
+                loading="lazy"
+              />
+            </div>
+
+            <div class="featured-home-body">
+              <h3>{home.data.title}</h3>
+              <p class="featured-home-location">{home.data.location}</p>
+              <p>{home.body}</p>
+            </div>
+          </a>
         </article>
       ))}
     </div>
     <div style="margin-top: 1.25rem;">
-      <a href="/homes" class="btn btn-ghost">View Full Portfolio</a>
+      <a href="/homes" class="btn btn-ghost">Explore Our Homes</a>
     </div>
   </section>
 
@@ -118,8 +133,8 @@ const featuredTestimonials = testimonials.slice(0, 2);
     <div class="section-header">
       <h2 class="section-title">A Calm, Clear Building Experience</h2>
       <p class="section-subtitle">
-        Building a custom home shouldn’t feel chaotic. Our process keeps you informed, confident,
-        and excited at every stage.
+        A thoughtful process that keeps decisions clear, communication steady, and you confident at
+        every stage.
       </p>
     </div>
     <div class="card-grid">
@@ -140,13 +155,15 @@ const featuredTestimonials = testimonials.slice(0, 2);
       <article class="card">
         <h3>03 — Build</h3>
         <p>
-          Transparent schedules, regular updates, and meticulous craft—no surprises, just steady
-          progress.
+          Clear schedules, regular updates, and careful craftsmanship keep the work moving with purpose
+          and transparency.
         </p>
       </article>
       <article class="card">
         <h3>04 — Live</h3>
-        <p>Step into a completed home that feels like arriving at a resort—every single day.</p>
+        <p>
+          Settle into a home that feels restorative, personal, and deeply connected to the way you live.
+        </p>
       </article>
     </div>
   </section>
@@ -155,8 +172,8 @@ const featuredTestimonials = testimonials.slice(0, 2);
     <div class="section-header">
       <h2 class="section-title">Designed for Utah’s Most Inspiring Settings</h2>
       <p class="section-subtitle">
-        From red rock desert to mountain ridgelines, Utah Oasis homes are crafted to belong to their
-        surroundings.
+        From red rock desert to mountain ridgelines, each home is shaped to feel naturally connected to
+        its surroundings.
       </p>
     </div>
     <div class="card-grid">
@@ -174,12 +191,6 @@ const featuredTestimonials = testimonials.slice(0, 2);
           Wasatch corridor.
         </p>
       </article>
-      <article class="card">
-        <h3>Resort & View-Oriented Lots</h3>
-        <p>
-          Homes planned around pools, courtyards, and sightlines so every day feels like a getaway.
-        </p>
-      </article>
     </div>
   </section>
 
@@ -187,15 +198,15 @@ const featuredTestimonials = testimonials.slice(0, 2);
     <div class="section-header">
       <h2 class="section-title">What Our Clients Say</h2>
       <p class="section-subtitle">
-        Most of our new projects come from referrals—here’s how clients describe their experience.
+        Reflections from homeowners on the experience of designing and building with Utah Oasis Homes.
       </p>
     </div>
-    <div class="card-grid">
+    <div class="card-grid testimonials-home-grid">
       {featuredTestimonials.map((t) => (
-        <article class="card">
-          <p style="font-size: 0.9rem; margin-bottom: 0.75rem;">“{t.quote}”</p>
-          <p style="font-size: 0.8rem; color: var(--muted);">
-            — {t.name}{t.location ? ` • ${t.location}` : ''}
+        <article class="card testimonial-home-card">
+          <p class="testimonial-home-quote">“{t.quote}”</p>
+          <p class="testimonial-home-attribution">
+            {t.name}{t.location ? ` • ${t.location}` : ''}
           </p>
         </article>
       ))}
@@ -203,11 +214,11 @@ const featuredTestimonials = testimonials.slice(0, 2);
   </section>
 
   <section class="primary-cta" id="primary-cta">
-    <h2>Ready to Build Your Oasis?</h2>
+    <h2>Let’s Begin with a Conversation</h2>
     <p>
-      Tell us about your land, your vision, and your timeline. We’ll follow up to schedule a
-      no-obligation consultation.
+      Share what you’re imagining, where you are in the process, and what matters most to you. We’ll
+      help you understand the next step.
     </p>
-    <a href="/start" class="btn btn-primary">Start Your Project</a>
+    <a href="/start" class="btn btn-primary">Start Your Home</a>
   </section>
 </BaseLayout>

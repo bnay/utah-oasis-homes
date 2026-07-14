@@ -20,10 +20,13 @@ const { home } = Astro.props as Props;
     </h3>
     <div class="home-card-location">{home.data.location}</div>
 
-    {home.data.tags?.length ? (
-      <div class="tag-row">
-        {home.data.tags.map((x: string) => <span class="tag">{x}</span>)}
-      </div>
-    ) : null}
-  </div>
+      {home.data.tags?.length ? (
+        <div class="tag-row">
+          {home.data.tags
+            .slice(0, 3)
+            .map((x: string) => <span class="tag">{x}</span>)}
+        </div>
+      ) : null}
+
+</div>
 </article>

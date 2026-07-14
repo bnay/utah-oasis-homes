@@ -120,7 +120,7 @@ const breadcrumbsJsonLd = {
       <div class="pill-eyebrow">Our Work</div>
       <h1 class="section-title">Our Homes</h1>
       <p class="section-subtitle">
-        A selection of custom builds designed to feel like private resorts—crafted for Utah’s most inspiring landscapes.
+        A collection of custom homes shaped by their setting, their owners, and the way each family lives.
       </p>
     </div>
 
@@ -150,6 +150,8 @@ const breadcrumbsJsonLd = {
   </div>
 ) : null}
 
+<p class="homes-filter-status">Showing all {homes.length} homes.</p>
+
 {featuredHomes.length ? (
   <>
     <h2 class="homes-subhead">Featured</h2>
@@ -158,8 +160,6 @@ const breadcrumbsJsonLd = {
     </div>
   </>
 ) : null}
-
-<p class="homes-filter-status">Showing all {homes.length} homes.</p>
 
 {otherHomes.length ? (
   <>
