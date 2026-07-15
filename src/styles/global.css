@@ -1534,6 +1534,7 @@ section {
   }
 
   .site-footer-button {
+    box-sizing: border-box;
     width: 100%;
   }
 }
