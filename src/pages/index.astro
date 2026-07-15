@@ -9,6 +9,25 @@ const featuredHomes = (await getCollection('homes'))
   .slice(0, 3);
   
 const featuredTestimonials = testimonials.slice(0, 2);
+
+const featuredImageDimensions: Record<
+  string,
+  { width: number; height: number }
+> = {
+  "alpine-custom": {
+    width: 1830,
+    height: 830,
+  },
+  "mapleton-modern": {
+    width: 2048,
+    height: 1536,
+  },
+  "desert-contemporary": {
+    width: 2000,
+    height: 1500,
+  },
+};
+
 ---
 
 <BaseLayout
@@ -36,12 +55,15 @@ const featuredTestimonials = testimonials.slice(0, 2);
     </div> -->
 
 	<div class="hero-logo-row">
-    <img
-      class="hero-logo-mark"
-      src="/branding/uoh-logo-blue-stacked-stroked.png"
-      alt=""
-      aria-hidden="true"
-    />
+      <img
+        class="hero-logo-mark"
+        src="/branding/uoh-logo-blue-stacked-stroked.png"
+        alt=""
+        aria-hidden="true"
+        width="2864"
+        height="1918"
+        decoding="async"
+      />
   </div>
 
 <div class="hero-eyebrow">
@@ -116,7 +138,10 @@ const featuredTestimonials = testimonials.slice(0, 2);
               <img
                 src={home.data.coverImage}
                 alt={`${home.data.title} in ${home.data.location}`}
+                width={featuredImageDimensions[home.id]?.width}
+                height={featuredImageDimensions[home.id]?.height}
                 loading="lazy"
+                decoding="async"
               />
             </div>
 
