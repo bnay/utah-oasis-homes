@@ -100,11 +100,12 @@ const organizationSchema = {
     {nextUrl ? <link rel="next" href={nextUrl} /> : null}
 
     <script
+      is:inline
       type="application/ld+json"
       set:html={JSON.stringify(organizationSchema)}
     />
-  </head>
-  
+    </head>
+
   <body class="site-shell">
     <header class="site-header">
       <Header />
