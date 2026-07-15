@@ -46,6 +46,29 @@ const idx = allHomes.findIndex((h) => h.slug === home.slug);
 const prevHome = idx > 0 ? allHomes[idx - 1] : null;
 const nextHome = idx >= 0 && idx < allHomes.length - 1 ? allHomes[idx + 1] : null;
 
+const siteOrigin = Astro.site?.toString() ?? Astro.url.origin;
+const homeUrl = new URL(`/homes/${home.slug}`, siteOrigin).href;
+
+const homeSchema = {
+  "@context": "https://schema.org",
+  "@type": "CreativeWork",
+  "@id": `${homeUrl}#project`,
+  name: title,
+  description: homeDescription,
+  url: homeUrl,
+  image: [coverImage, ...galleryImages].map(
+    (src) => new URL(src, siteOrigin).href
+  ),
+  creator: {
+    "@id": `${siteOrigin.replace(/\/$/, "")}/#organization`,
+  },
+  contentLocation: {
+    "@type": "Place",
+    name: location,
+  },
+  keywords: tags?.join(", "),
+};
+
 ---
 
 <BaseLayout
@@ -54,6 +77,12 @@ const nextHome = idx >= 0 && idx < allHomes.length - 1 ? allHomes[idx + 1] : nul
   canonicalPath={`/homes/${home.slug}`}
   socialImage={coverImage}
 >
+
+  <script
+    type="application/ld+json"
+    set:html={JSON.stringify(homeSchema)}
+  />
+
   <section class="home-detail">
     <a class="home-back" href="/homes">← Back to Our Homes</a>
 
