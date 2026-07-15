@@ -81,14 +81,6 @@ const normalizeTag = (tag: unknown) =>
     .trim()
     .toLowerCase();
 
-const toTagSlug = (tag: unknown) =>
-  String(tag ?? "")
-    .trim()
-    .toLowerCase()
-    .replace(/&/g, "and")
-    .replace(/[^a-z0-9]+/g, "-")
-    .replace(/(^-|-$)/g, "");
-
 const { activeTag } = Astro.props;
 
 const tagSlug = Astro.params.tag;
