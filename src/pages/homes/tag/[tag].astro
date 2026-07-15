@@ -160,14 +160,16 @@ const breadcrumbsJsonLd = {
 >s
 
   <script
+    is:inline
     type="application/ld+json"
     set:html={JSON.stringify(breadcrumbsJsonLd)}
   />
   <script
+    is:inline
     type="application/ld+json"
     set:html={JSON.stringify(itemListJsonLd)}
   />
-
+  
   <section>
     <nav aria-label="Breadcrumb" class="breadcrumbs">
       <ol class="breadcrumbs-list">
