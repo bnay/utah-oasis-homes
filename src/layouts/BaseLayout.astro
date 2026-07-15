@@ -42,6 +42,35 @@ const socialImageUrl = new URL(socialImage, siteOrigin).href;
 const prevUrl = prevHref ? new URL(prevHref, siteOrigin).href : null;
 const nextUrl = nextHref ? new URL(nextHref, siteOrigin).href : null;
 
+const organizationSchema = {
+  "@context": "https://schema.org",
+  "@type": "HomeAndConstructionBusiness",
+  "@id": `${siteOrigin.replace(/\/$/, "")}/#organization`,
+  name: "Utah Oasis Homes",
+  url: `${siteOrigin.replace(/\/$/, "")}/`,
+  logo: new URL("/branding/uoh-og.png", siteOrigin).href,
+  image: new URL("/branding/uoh-og.png", siteOrigin).href,
+  telephone: "+1-801-859-3317",
+  email: "utahoasishomes@gmail.com",
+  address: {
+    "@type": "PostalAddress",
+    streetAddress: "2052 West 700 South, Unit H",
+    addressLocality: "Springville",
+    addressRegion: "UT",
+    postalCode: "84664",
+    addressCountry: "US",
+  },
+  areaServed: [
+    {
+      "@type": "AdministrativeArea",
+      name: "Wasatch Front, Utah",
+    },
+    {
+      "@type": "AdministrativeArea",
+      name: "Southern Utah",
+    },
+  ],
+};
 ---
 
 <!DOCTYPE html>
@@ -68,8 +97,14 @@ const nextUrl = nextHref ? new URL(nextHref, siteOrigin).href : null;
     
     <link rel="canonical" href={canonicalUrl} />
     {prevUrl ? <link rel="prev" href={prevUrl} /> : null}
-    {nextUrl ? <link rel="next" href={nextUrl} /> : null}</head>
+    {nextUrl ? <link rel="next" href={nextUrl} /> : null}
 
+    <script
+      type="application/ld+json"
+      set:html={JSON.stringify(organizationSchema)}
+    />
+  </head>
+  
   <body class="site-shell">
     <header class="site-header">
       <Header />
