@@ -107,14 +107,16 @@ const organizationSchema = {
     </head>
 
   <body class="site-shell">
+    <a class="skip-link" href="#main-content">Skip to main content</a>
+
     <header class="site-header">
       <Header />
     </header>
 
-    <main>
+    <main id="main-content" tabindex="-1">
       <slot />
     </main>
-
+    
     <footer class="site-footer">
       <Footer />
     </footer>
