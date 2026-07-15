@@ -6,6 +6,11 @@ import sitemap from '@astrojs/sitemap';
 export default defineConfig({
   trailingSlash: "ignore",
   site: "https://utahoasishomes.com",
-  integrations: [sitemap()],
+  integrations: [
+    sitemap({
+      filter: (page) =>
+        new URL(page).pathname.replace(/\/$/, "") !== "/thank-you",
+    }),
+  ],
 });
 
