@@ -156,11 +156,13 @@ import BaseLayout from "../layouts/BaseLayout.astro";
               autocomplete="email"
               required
               maxlength="150"
+              pattern="^[^\s@]+@[^\s@]+\.[^\s@]+$"
+              aria-describedby="email-help"
             />
-
-            <span class="form-help">
-              We will use this to respond to your request
+            <span id="email-help" class="form-help">
+              Enter a complete address, such as name@example.com
             </span>
+
           </div>
 
           <div class="form-field">
@@ -395,6 +397,33 @@ import BaseLayout from "../layouts/BaseLayout.astro";
 
       const statusMessage =
         form.querySelector<HTMLElement>(".form-status");
+
+      const emailInput =
+        form.querySelector<HTMLInputElement>("#email");
+
+      const validateEmail = () => {
+        if (!emailInput) {
+          return;
+        }
+
+        if (emailInput.validity.valueMissing) {
+          emailInput.setCustomValidity(
+            "Please enter your email address."
+          );
+        } else if (
+          emailInput.validity.typeMismatch ||
+          emailInput.validity.patternMismatch
+        ) {
+          emailInput.setCustomValidity(
+            "Please enter a complete email address, such as name@example.com."
+          );
+        } else {
+          emailInput.setCustomValidity("");
+        }
+      };
+
+      emailInput?.addEventListener("input", validateEmail);
+      emailInput?.addEventListener("invalid", validateEmail);
 
       form.addEventListener("submit", async (event) => {
         event.preventDefault();
