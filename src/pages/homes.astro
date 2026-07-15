@@ -4,7 +4,6 @@ import { getCollection } from "astro:content";
 import type { CollectionEntry } from "astro:content";
 import HomeCard from "../components/HomeCard.astro";
 
-type Home = CollectionEntry<"homes">;
 
 const homes = await getCollection("homes");
 
