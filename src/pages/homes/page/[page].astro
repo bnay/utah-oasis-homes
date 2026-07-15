@@ -89,9 +89,17 @@ const itemListJsonLd = {
   prevHref={prevHref}
   nextHref={nextHref}
 >
-  <script type="application/ld+json" set:html={JSON.stringify(breadcrumbsJsonLd)} />
-  <script type="application/ld+json" set:html={JSON.stringify(itemListJsonLd)} />
-
+  <script
+    is:inline
+    type="application/ld+json"
+    set:html={JSON.stringify(breadcrumbsJsonLd)}
+  />
+  <script
+    is:inline
+    type="application/ld+json"
+    set:html={JSON.stringify(itemListJsonLd)}
+  />
+  
   <nav aria-label="Breadcrumb" class="breadcrumbs">
     <ol class="breadcrumbs-list">
       <li class="breadcrumbs-item"><a href="/">Home</a></li>
