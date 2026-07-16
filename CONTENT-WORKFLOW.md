@@ -214,3 +214,109 @@ Pagination, tag pages, URLs, breadcrumbs, and SEO metadata update automatically.
 Do not install an Astro adapter unless the site is intentionally changed from static rendering to server rendering.
 
 Do not upgrade Astro while making routine content updates.
+
+
+
+DEPLOYMENT PROCESS
+
+Here’s the safe publish process for the updated preview site.
+
+1. Build the latest site
+
+From PowerShell:
+
+cd C:\Projects\utah-oasis-homes
+
+npm exec astro check
+npm run build
+
+Confirm:
+
+no Astro errors
+the build completes successfully
+sand-hollow-oasis appears in the generated routes
+
+You can verify the page exists with:
+
+Test-Path .\dist\homes\sand-hollow-oasis\index.html
+
+Expected:
+
+True
+2. Create the deployment ZIP
+
+Run:
+
+Compress-Archive `
+  -Path .\dist\* `
+  -DestinationPath .\utah-oasis-homes-preview.zip `
+  -Force
+
+This creates:
+
+C:\Projects\utah-oasis-homes\utah-oasis-homes-preview.zip
+3. Open the preview folder in cPanel
+
+Go to:
+
+cPanel → File Manager
+
+Navigate to:
+
+/home/utahoasishomes/preview.utahoasishomes.com
+4. Replace the current preview files
+
+Inside that folder:
+
+Select the existing website files and folders.
+Do not delete the preview.utahoasishomes.com folder itself.
+Delete the old deployed files.
+Click Upload.
+Upload:
+utah-oasis-homes-preview.zip
+Return to File Manager.
+Select the ZIP.
+Click Extract.
+Extract directly into:
+/home/utahoasishomes/preview.utahoasishomes.com
+
+After extraction, confirm:
+
+index.html
+
+is directly inside the preview folder, not inside an extra dist directory.
+
+Then delete the ZIP from the server.
+
+5. Verify the new deployment
+
+Open:
+
+https://preview.utahoasishomes.com
+
+Hard refresh with:
+
+Ctrl + Shift + R
+
+Then verify:
+
+https://preview.utahoasishomes.com/homes/sand-hollow-oasis
+
+Check:
+
+the new home appears
+cover and gallery images load
+clicking an image opens the lightbox
+previous and next controls work
+keyboard arrows work
+Escape closes the lightbox
+mobile layout still looks correct
+the new tags and related tag pages work
+
+Also test:
+
+https://preview.utahoasishomes.com/homes/tag/wasatch-front
+
+and:
+
+https://preview.utahoasishomes.com/homes/tag/southern-utah

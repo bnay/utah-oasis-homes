@@ -2,8 +2,9 @@
 title: Lehi Custom
 location: Lehi, Utah
 coverImage: /images/homes/lehi-custom-1.png
-tags: ["Wasatch Front"]
-order: 5
+# tags: ["Wasatch Front"]
+order: 6
+featured: false
 
 gallery:
   - /images/homes/lehi-custom-1.png

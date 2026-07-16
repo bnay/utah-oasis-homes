@@ -152,7 +152,11 @@ const breadcrumbsJsonLd = {
   </div>
 ) : null}
 
-<p class="homes-filter-status">Showing all {homes.length} homes.</p>
+{allTags.length ? (
+  <p class="homes-filter-status">
+    Showing all {homes.length} homes.
+  </p>
+) : null}
 
 {featuredHomes.length ? (
   <>

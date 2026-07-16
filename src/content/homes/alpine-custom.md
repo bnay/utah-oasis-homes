@@ -2,9 +2,9 @@
 title: Alpine Custom
 location: Draper, Utah
 coverImage: /images/homes/alpine-custom.png
-tags: ["Wasatch Front"]
-featured: true
-order: 1
+# tags: ["Wasatch Front"]
+featured: false
+order: 4
 
 gallery:
   - /images/homes/alpine-custom.png
