@@ -89,7 +89,17 @@ const homeSchema = {
 
     <header class="home-hero">
       <div class="home-hero-media">
-        <img src={coverImage} alt={title} />
+        <button
+          class="home-gallery-trigger home-gallery-trigger--hero"
+          type="button"
+          data-gallery-index="0"
+          aria-label={`Open large view of ${title}`}
+        >
+          <img src={coverImage} alt={title} />
+          <span class="home-gallery-zoom" aria-hidden="true">
+            View larger
+          </span>
+        </button>
       </div>
 
       <div class="home-hero-body">
@@ -115,17 +125,71 @@ const homeSchema = {
         <h2 class="home-gallery-title">Gallery</h2>
         <div class="home-gallery-grid">
           {galleryImages.map((src, index) => (
-            <img
-              src={src}
-              alt={`${title} — additional view ${index + 1}`}
-              loading="lazy"
-            />
+            <button
+              class="home-gallery-trigger"
+              type="button"
+              data-gallery-index={index + 1}
+              aria-label={`Open large view ${index + 2} of ${galleryImages.length + 1} for ${title}`}
+            >
+              <img
+                src={src}
+                alt={`${title} — additional view ${index + 1}`}
+                loading="lazy"
+                decoding="async"
+              />
+
+              <span class="home-gallery-zoom" aria-hidden="true">
+                View larger
+              </span>
+            </button>
           ))}
         </div>
       </section>
     ) : null}
 
-    <nav class="home-pager" aria-label="More homes">
+    <dialog
+      class="home-lightbox"
+      aria-label={`${title} image gallery`}
+    >
+      <div class="home-lightbox-shell">
+        <button
+          class="home-lightbox-close"
+          type="button"
+          aria-label="Close image gallery"
+        >
+          <span aria-hidden="true">×</span>
+        </button>
+
+        <button
+          class="home-lightbox-nav home-lightbox-prev"
+          type="button"
+          aria-label="View previous image"
+        >
+          <span aria-hidden="true">←</span>
+        </button>
+
+        <figure class="home-lightbox-figure">
+          <img
+            class="home-lightbox-image"
+            src=""
+            alt=""
+          />
+
+          <figcaption class="home-lightbox-caption">
+            <span class="home-lightbox-description"></span>
+            <span class="home-lightbox-count" aria-live="polite"></span>
+          </figcaption>
+        </figure>
+
+        <button
+          class="home-lightbox-nav home-lightbox-next"
+          type="button"
+          aria-label="View next image"
+        >
+          <span aria-hidden="true">→</span>
+        </button>
+      </div>
+    </dialog>
       {prevHome ? (
         <a class="home-pager-link home-pager-prev" href={`/homes/${prevHome.slug}`}>
           <span class="home-pager-kicker">
@@ -150,4 +214,165 @@ const homeSchema = {
     </nav>
 
 </section>
+
+<script>
+  const lightbox =
+    document.querySelector<HTMLDialogElement>(".home-lightbox");
+
+  const lightboxImage =
+    lightbox?.querySelector<HTMLImageElement>(".home-lightbox-image");
+
+  const lightboxDescription =
+    lightbox?.querySelector<HTMLElement>(".home-lightbox-description");
+
+  const lightboxCount =
+    lightbox?.querySelector<HTMLElement>(".home-lightbox-count");
+
+  const closeButton =
+    lightbox?.querySelector<HTMLButtonElement>(".home-lightbox-close");
+
+  const previousButton =
+    lightbox?.querySelector<HTMLButtonElement>(".home-lightbox-prev");
+
+  const nextButton =
+    lightbox?.querySelector<HTMLButtonElement>(".home-lightbox-next");
+
+  const galleryTriggers = Array.from(
+    document.querySelectorAll<HTMLButtonElement>(".home-gallery-trigger")
+  );
+
+  const galleryItems = galleryTriggers
+    .map((trigger) => {
+      const image = trigger.querySelector<HTMLImageElement>("img");
+
+      if (!image) {
+        return null;
+      }
+
+      return {
+        src: image.currentSrc || image.src,
+        alt: image.alt,
+      };
+    })
+    .filter(
+      (
+        item
+      ): item is {
+        src: string;
+        alt: string;
+      } => item !== null
+    );
+
+  let activeIndex = 0;
+  let activeTrigger: HTMLButtonElement | null = null;
+  let touchStartX = 0;
+  let touchEndX = 0;
+
+  const showImage = (index: number) => {
+    if (
+      !lightboxImage ||
+      !lightboxDescription ||
+      !lightboxCount ||
+      galleryItems.length === 0
+    ) {
+      return;
+    }
+
+    activeIndex =
+      (index + galleryItems.length) % galleryItems.length;
+
+    const item = galleryItems[activeIndex];
+
+    lightboxImage.src = item.src;
+    lightboxImage.alt = item.alt;
+    lightboxDescription.textContent = item.alt;
+    lightboxCount.textContent =
+      `${activeIndex + 1} of ${galleryItems.length}`;
+  };
+
+  const showPreviousImage = () => {
+    showImage(activeIndex - 1);
+  };
+
+  const showNextImage = () => {
+    showImage(activeIndex + 1);
+  };
+
+  galleryTriggers.forEach((trigger) => {
+    trigger.addEventListener("click", () => {
+      if (!lightbox) {
+        return;
+      }
+
+      activeTrigger = trigger;
+
+      const requestedIndex = Number(
+        trigger.dataset.galleryIndex ?? "0"
+      );
+
+      showImage(requestedIndex);
+      document.body.classList.add("lightbox-open");
+      lightbox.showModal();
+      closeButton?.focus();
+    });
+  });
+
+  closeButton?.addEventListener("click", () => {
+    lightbox?.close();
+  });
+
+  previousButton?.addEventListener("click", showPreviousImage);
+  nextButton?.addEventListener("click", showNextImage);
+
+  lightbox?.addEventListener("keydown", (event) => {
+    if (event.key === "ArrowLeft") {
+      event.preventDefault();
+      showPreviousImage();
+    }
+
+    if (event.key === "ArrowRight") {
+      event.preventDefault();
+      showNextImage();
+    }
+  });
+
+  lightbox?.addEventListener("click", (event) => {
+    if (event.target === lightbox) {
+      lightbox.close();
+    }
+  });
+
+  lightbox?.addEventListener(
+    "touchstart",
+    (event) => {
+      touchStartX = event.changedTouches[0]?.screenX ?? 0;
+    },
+    { passive: true }
+  );
+
+  lightbox?.addEventListener(
+    "touchend",
+    (event) => {
+      touchEndX = event.changedTouches[0]?.screenX ?? 0;
+
+      const swipeDistance = touchEndX - touchStartX;
+
+      if (Math.abs(swipeDistance) < 50) {
+        return;
+      }
+
+      if (swipeDistance > 0) {
+        showPreviousImage();
+      } else {
+        showNextImage();
+      }
+    },
+    { passive: true }
+  );
+
+  lightbox?.addEventListener("close", () => {
+    document.body.classList.remove("lightbox-open");
+    activeTrigger?.focus();
+  });
+</script>
 </BaseLayout>

@@ -1045,6 +1045,214 @@ section {
   background: #020309;
 }
 
+/* Home image gallery lightbox */
+
+.home-gallery-trigger {
+  position: relative;
+  display: block;
+  width: 100%;
+  padding: 0;
+  overflow: hidden;
+  border: 0;
+  border-radius: var(--radius-lg);
+  color: inherit;
+  background: #020309;
+  cursor: zoom-in;
+  font: inherit;
+  text-align: inherit;
+}
+
+.home-gallery-trigger--hero {
+  border-radius: 0;
+}
+
+.home-gallery-trigger img {
+  display: block;
+  width: 100%;
+  height: auto;
+  transition:
+    transform 220ms ease,
+    filter 220ms ease;
+}
+
+.home-gallery-trigger:hover img,
+.home-gallery-trigger:focus-visible img {
+  transform: scale(1.018);
+  filter: brightness(0.82);
+}
+
+.home-gallery-trigger:focus-visible {
+  outline: 3px solid var(--brand-accent);
+  outline-offset: 4px;
+}
+
+.home-gallery-zoom {
+  position: absolute;
+  right: 0.85rem;
+  bottom: 0.85rem;
+  padding: 0.45rem 0.7rem;
+  border: 1px solid rgba(255, 255, 255, 0.35);
+  border-radius: 999px;
+  color: #ffffff;
+  background: rgba(5, 7, 10, 0.78);
+  box-shadow: 0 8px 22px rgba(0, 0, 0, 0.45);
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  opacity: 0;
+  transform: translateY(6px);
+  transition:
+    opacity 160ms ease,
+    transform 160ms ease;
+  pointer-events: none;
+}
+
+.home-gallery-trigger:hover .home-gallery-zoom,
+.home-gallery-trigger:focus-visible .home-gallery-zoom {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+body.lightbox-open {
+  overflow: hidden;
+}
+
+.home-lightbox {
+  width: 100%;
+  max-width: none;
+  height: 100%;
+  max-height: none;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  color: var(--text);
+  background: transparent;
+}
+
+.home-lightbox::backdrop {
+  background: rgba(2, 3, 8, 0.94);
+  backdrop-filter: blur(8px);
+}
+
+.home-lightbox-shell {
+  position: relative;
+  box-sizing: border-box;
+  display: grid;
+  grid-template-columns: minmax(48px, 72px) minmax(0, 1fr) minmax(48px, 72px);
+  align-items: center;
+  width: 100%;
+  min-height: 100%;
+  padding: clamp(4rem, 8vw, 6rem) clamp(0.5rem, 2vw, 1.5rem) 1.5rem;
+}
+
+.home-lightbox-figure {
+  display: grid;
+  grid-template-rows: minmax(0, 1fr) auto;
+  gap: 0.9rem;
+  align-items: center;
+  justify-items: center;
+  min-width: 0;
+  margin: 0;
+}
+
+.home-lightbox-image {
+  display: block;
+  max-width: 100%;
+  max-height: calc(100vh - 9rem);
+  width: auto;
+  height: auto;
+  object-fit: contain;
+  border-radius: 10px;
+  box-shadow: 0 26px 70px rgba(0, 0, 0, 0.72);
+}
+
+.home-lightbox-caption {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.35rem 1rem;
+  color: var(--stone-light);
+  font-size: 0.82rem;
+  text-align: center;
+}
+
+.home-lightbox-count {
+  color: var(--brand-accent);
+  white-space: nowrap;
+}
+
+.home-lightbox-close,
+.home-lightbox-nav {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 48px;
+  height: 48px;
+  padding: 0;
+  border: 1px solid rgba(255, 255, 255, 0.32);
+  border-radius: 50%;
+  color: #ffffff;
+  background: rgba(7, 10, 17, 0.78);
+  cursor: pointer;
+  font: inherit;
+  font-size: 1.5rem;
+  transition:
+    background-color 150ms ease,
+    border-color 150ms ease,
+    transform 150ms ease;
+}
+
+.home-lightbox-close {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  z-index: 2;
+}
+
+.home-lightbox-nav {
+  justify-self: center;
+}
+
+.home-lightbox-close:hover,
+.home-lightbox-nav:hover {
+  border-color: rgba(255, 255, 255, 0.7);
+  background: rgba(33, 77, 121, 0.92);
+  transform: scale(1.04);
+}
+
+.home-lightbox-close:focus-visible,
+.home-lightbox-nav:focus-visible {
+  outline: 3px solid var(--brand-accent);
+  outline-offset: 3px;
+}
+
+@media (max-width: 600px) {
+  .home-gallery-zoom {
+    opacity: 1;
+    transform: none;
+  }
+
+  .home-lightbox-shell {
+    grid-template-columns: 48px minmax(0, 1fr) 48px;
+    padding: 4.25rem 0.25rem 1rem;
+  }
+
+  .home-lightbox-close,
+  .home-lightbox-nav {
+    width: 42px;
+    height: 42px;
+  }
+
+  .home-lightbox-image {
+    max-height: calc(100vh - 10rem);
+    border-radius: 6px;
+  }
+
+  .home-lightbox-description {
+    flex-basis: 100%;
+  }
+}
+
 @media (min-width: 900px) {
   .home-hero {
     grid-template-columns: 1.35fr 1fr;
