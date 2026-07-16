@@ -13,7 +13,7 @@ gallery:
   - /images/homes/SH67/Lot 67 interior 3.jpg
   - /images/homes/SH67/Lot 67 interior2.jpg
   - /images/homes/SH67/Lot 67 casita bath.jpg
-  - /images/homes/SH67/Lot 67 pool1.jpg
+  - /images/homes/SH67/Lot 67 pool 1.jpg
   - /images/homes/SH67/Lot 67 pool3.jpg
   
 ---
