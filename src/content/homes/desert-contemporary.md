@@ -8,8 +8,13 @@ order: 4
 
 gallery:
   - /images/homes/desert-contemporary.png
-  - /images/homes/desert-contemporary-1.png
   - /images/homes/desert-contemporary-2.png
+  - /images/homes/SH67/Lot 67 primary bed.jpg
+  - /images/homes/SH67/Lot 67 interior 3.jpg
+  - /images/homes/SH67/Lot 67 interior2.jpg
+  - /images/homes/SH67/Lot 67 casita bath.jpg
+  - /images/homes/SH67/Lot 67 pool1.jpg
+  - /images/homes/SH67/Lot 67 pool3.jpg
   
 ---
 
