@@ -1457,6 +1457,72 @@ section {
   border-radius: 4px;
 }
 
+.site-footer-social {
+  margin-top: 0.85rem;
+}
+
+.site-footer-social-heading {
+  margin-bottom: 0.55rem;
+  color: var(--stone-soft);
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.site-footer-social-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.55rem;
+}
+
+.site-footer-social-link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 42px;
+  height: 42px;
+  box-sizing: border-box;
+  flex: 0 0 42px;
+  border: 1px solid rgba(148, 163, 184, 0.3);
+  border-radius: 50%;
+  color: var(--stone-light);
+  background: rgba(255, 255, 255, 0.03);
+  text-decoration: none;
+  transition:
+    color 150ms ease,
+    border-color 150ms ease,
+    background-color 150ms ease,
+    transform 150ms ease;
+}
+
+.site-footer-social-link:hover {
+  color: #ffffff;
+  border-color: rgba(148, 163, 184, 0.6);
+  background: rgba(148, 163, 184, 0.11);
+  transform: translateY(-2px);
+}
+
+.site-footer-social-link:focus-visible {
+  outline: 2px solid var(--brand-accent);
+  outline-offset: 3px;
+}
+
+.site-footer-social-icon {
+  width: 21px;
+  height: 21px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.8;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.site-footer-social-icon-dot,
+.site-footer-social-icon-fill {
+  fill: currentColor;
+  stroke: none;
+}
 .site-footer-action-copy {
   max-width: 330px;
   margin: 0 0 1.1rem;
