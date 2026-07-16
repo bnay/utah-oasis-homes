@@ -2,7 +2,7 @@
 title: Mapleton Modern
 location: Mapleton, Utah
 coverImage: /images/homes/mapleton-modern.png
-tags: ["Mountain", "Timber", "Stone", "Northern Utah", "Contemporary", "View Lot"]
+tags: ["Wasatch Front"]
 featured: true
 order: 2
 gallery:

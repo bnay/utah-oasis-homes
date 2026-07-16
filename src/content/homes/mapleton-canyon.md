@@ -2,7 +2,7 @@
 title: Mapleton Canyon
 location: Mapleton, Utah
 coverImage: /images/homes/mapleton-canyon-1-optimized.jpg
-tags: ["Pool", "Northern Utah", "Contemporary", "View Lot"]
+tags: ["Wasatch Front", "Outdoor Living"]
 order: 3
 gallery:
  

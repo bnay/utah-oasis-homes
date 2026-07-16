@@ -2,7 +2,7 @@
 title: Desert Contemporary
 location: St. George, Utah
 coverImage: /images/homes/desert-contemporary-1-optimized.jpg
-tags: ["Desert", "Contemporary", "Courtyard", "Southern Utah", "View Lot"]
+tags: ["Southern Utah", "Outdoor Living", "Pool"]
 featured: true
 order: 4
 
