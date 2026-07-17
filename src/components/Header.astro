@@ -61,6 +61,16 @@ const isStartPage = currentPath.startsWith("/start");
     >
       About
     </a>
+
+        <a
+      href="/client-stories"
+      class:list={[
+        "nav-link",
+        currentPath.startsWith("/client-stories") && "nav-link--active",
+      ]}
+    >
+      Client Stories
+    </a>
   </nav>
 
   <div class="nav-right">
@@ -129,6 +139,16 @@ const isStartPage = currentPath.startsWith("/start");
           ]}
         >
           About
+        </a>
+
+        <a
+          href="/client-stories"
+          class:list={[
+            "nav-mobile-link",
+            currentPath.startsWith("/client-stories") && "is-active",
+          ]}
+        >
+          Client Stories
         </a>
 
         <a

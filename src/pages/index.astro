@@ -1,14 +1,33 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import { getCollection } from 'astro:content';
-import { testimonials } from '../data/testimonials';
 
 const featuredHomes = (await getCollection('homes'))
   .filter((home) => home.data.featured)
   .sort((a, b) => a.data.order - b.data.order)
   .slice(0, 3);
   
-const featuredTestimonials = testimonials.slice(0, 2);
+const customerStories = (await getCollection('stories'))
+  .filter((story) => story.data.featured)
+  .sort((a, b) => {
+    const orderA = a.data.order ?? 999;
+    const orderB = b.data.order ?? 999;
+
+    if (orderA !== orderB) {
+      return orderA - orderB;
+    }
+
+    return a.data.title.localeCompare(b.data.title);
+  });
+
+const storyPreviews = customerStories.map((story) => ({
+  title: story.data.title,
+  customers: story.data.customers,
+  excerpt: story.data.excerpt,
+  href: `/client-stories#${story.slug}`,
+}));
+
+const initialStories = storyPreviews.slice(0, 2);
 
 const featuredImageDimensions: Record<
   string,
@@ -245,22 +264,47 @@ const featuredImageDimensions: Record<
     </div>
   </section>
 
-  <section class="section" id="testimonials">
+    <section
+    class="section"
+    id="testimonials"
+    data-story-pool={JSON.stringify(storyPreviews)}
+  >
     <div class="section-header">
       <h2 class="section-title">What Our Clients Say</h2>
       <p class="section-subtitle">
         Reflections from homeowners on the experience of designing and building with Utah Oasis Homes.
       </p>
     </div>
+
     <div class="card-grid testimonials-home-grid">
-      {featuredTestimonials.map((t) => (
+      {initialStories.map((story) => (
         <article class="card testimonial-home-card">
-          <p class="testimonial-home-quote">“{t.quote}”</p>
-          <p class="testimonial-home-attribution">
-            {t.name}{t.location ? ` • ${t.location}` : ''}
+          <h3 class="testimonial-home-title">
+            {story.title}
+          </h3>
+
+          <p class="testimonial-home-quote">
+            “{story.excerpt}”
           </p>
+
+          <p class="testimonial-home-attribution">
+            {story.customers}
+          </p>
+
+          <a
+            class="testimonial-home-link"
+            href={story.href}
+          >
+            Read full story →
+          </a>
         </article>
       ))}
+    </div>
+
+    <div style="margin-top: 1.25rem;">
+      <a href="/client-stories" class="btn btn-ghost">
+        View All Client Stories
+      </a>
     </div>
   </section>
 
@@ -272,4 +316,94 @@ const featuredImageDimensions: Record<
     </p>
     <a href="/start" class="btn btn-primary">Start Your Home</a>
   </section>
+  
+<script>
+  const storySection =
+    document.querySelector<HTMLElement>("#testimonials");
+
+  if (storySection?.dataset.storyPool) {
+    try {
+      const stories = JSON.parse(
+        storySection.dataset.storyPool
+      ) as Array<{
+        title: string;
+        customers: string;
+        excerpt: string;
+        href: string;
+      }>;
+
+      const cards = Array.from(
+        storySection.querySelectorAll<HTMLElement>(
+          ".testimonial-home-card"
+        )
+      );
+
+      if (stories.length >= 2 && cards.length >= 2) {
+        const dayNumber = Math.floor(
+          Date.now() / 86_400_000
+        );
+
+        const firstIndex = dayNumber % stories.length;
+
+        const rotationCycle = Math.floor(
+          dayNumber / stories.length
+        );
+
+        const partnerOffset =
+          1 + (rotationCycle % (stories.length - 1));
+
+        const secondIndex =
+          (firstIndex + partnerOffset) % stories.length;
+
+        const selectedStories = [
+          stories[firstIndex],
+          stories[secondIndex],
+        ];
+
+        cards.slice(0, 2).forEach((card, index) => {
+          const story = selectedStories[index];
+
+          const title =
+            card.querySelector<HTMLElement>(
+              ".testimonial-home-title"
+            );
+
+          const quote =
+            card.querySelector<HTMLElement>(
+              ".testimonial-home-quote"
+            );
+
+          const attribution =
+            card.querySelector<HTMLElement>(
+              ".testimonial-home-attribution"
+            );
+
+          const link =
+            card.querySelector<HTMLAnchorElement>(
+              ".testimonial-home-link"
+            );
+
+          if (title) {
+            title.textContent = story.title;
+          }
+
+          if (quote) {
+            quote.textContent = `“${story.excerpt}”`;
+          }
+
+          if (attribution) {
+            attribution.textContent = story.customers;
+          }
+
+          if (link) {
+            link.href = story.href;
+          }
+        });
+      }
+    } catch {
+      // Keep the server-rendered fallback stories if the data cannot be read.
+    }
+  }
+</script>
+
 </BaseLayout>

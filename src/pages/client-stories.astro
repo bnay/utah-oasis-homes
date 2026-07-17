@@ -1,0 +1,82 @@
+﻿---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import { getCollection, render } from "astro:content";
+
+const stories = await getCollection("stories");
+
+stories.sort((a, b) => {
+  const orderA = a.data.order ?? 999;
+  const orderB = b.data.order ?? 999;
+
+  if (orderA !== orderB) {
+    return orderA - orderB;
+  }
+
+  return a.data.title.localeCompare(b.data.title);
+});
+
+const renderedStories = await Promise.all(
+  stories.map(async (story) => {
+    const { Content } = await render(story);
+
+    return {
+      story,
+      Content,
+    };
+  })
+);
+---
+
+<BaseLayout
+  title="Client Stories | Utah Oasis Homes"
+  description="Read what homeowners have shared about their experience building with Utah Oasis Homes."
+  canonicalPath="/client-stories"
+>
+  <section class="section">
+    <nav aria-label="Breadcrumb" class="breadcrumbs">
+      <ol class="breadcrumbs-list">
+        <li class="breadcrumbs-item">
+          <a href="/">Home</a>
+        </li>
+        <li class="breadcrumbs-separator" aria-hidden="true">→</li>
+        <li class="breadcrumbs-item breadcrumbs-current">
+          Client Stories
+        </li>
+      </ol>
+    </nav>
+
+    <div class="section-header">
+      <div class="pill-eyebrow">Homeowner Experiences</div>
+
+      <h1 class="section-title">Client Stories</h1>
+
+      <p class="section-subtitle">
+        Building a custom home is a deeply personal experience. Here are a few reflections from
+        homeowners who trusted Utah Oasis Homes with theirs.
+      </p>
+    </div>
+
+    <div class="client-stories-list">
+      {renderedStories.map(({ story, Content }, index) => (
+        <article class="card client-story" id={story.slug}>
+          <header class="client-story-header">
+            <span class="client-story-number" aria-hidden="true">
+              {String(index + 1).padStart(2, "0")}
+            </span>
+
+            <h2 class="client-story-title">{story.data.title}</h2>
+          </header>
+
+          <div class="client-story-content">
+            <Content />
+          </div>
+
+          <footer class="client-story-attribution">
+            <span aria-hidden="true">—</span>
+            <span>{story.data.customers}</span>
+          </footer>
+        </article>
+      ))}
+    </div>
+  </section>
+</BaseLayout>

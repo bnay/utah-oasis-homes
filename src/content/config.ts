@@ -42,6 +42,29 @@ const homes = defineCollection({
   }),
 });
 
+const stories = defineCollection({
+  schema: z.object({
+    title: z.string().trim().min(1, "A story title is required."),
+
+    customers: z.string().trim().min(1, "A customer name is required."),
+
+    excerpt: z.string().trim().min(1, "A story excerpt is required."),
+
+    featured: z.boolean().default(true),
+
+    order: z
+      .number()
+      .int("The order value must be a whole number.")
+      .positive("The order value must be greater than zero.")
+      .default(999),
+
+    project: z.string().trim().optional(),
+
+    location: z.string().trim().optional(),
+  }),
+});
+
 export const collections = {
   homes,
+  stories,
 };
