@@ -13,4 +13,4 @@ gallery:
 
 ---
 
-A modern hillside home with expansive glazing, warm natural finishes, and outdoor spaces designed around the view.
+Positioned against Draper’s hillside, this custom home balances contemporary lines with warm natural finishes and broad expanses of glass. Thoughtfully connected indoor and outdoor spaces keep the surrounding landscape in view while creating a comfortable setting for everyday living and gathering.

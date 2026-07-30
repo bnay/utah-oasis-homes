@@ -11,4 +11,4 @@ gallery:
   - /images/homes/mapleton-canyon-3-optimized.jpg    
 ---
 
-A spacious custom home designed for relaxed family living, generous gathering spaces, and effortless entertaining.
+Surrounded by Mapleton’s natural beauty, this spacious custom home pairs a relaxed sense of place with rooms designed for connection. Generous gathering areas, an easy indoor-outdoor flow, and comfortable private spaces support both lively entertaining and the quieter moments of everyday family life.

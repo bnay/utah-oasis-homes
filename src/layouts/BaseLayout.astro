@@ -29,18 +29,46 @@ const {
 // - Optional override: canonicalPath (absolute via Astro.site when available)
 const siteOrigin = Astro.site?.toString() ?? Astro.url.origin;
 
-const canonical = canonicalPath
-  ? new URL(canonicalPath, siteOrigin)
-  : new URL(Astro.url);
+const toSiteUrl = (pathOrUrl: string | URL) => {
+  const url = new URL(pathOrUrl, siteOrigin);
 
-canonical.search = "";
-canonical.hash = "";
+  url.search = "";
+  url.hash = "";
+
+  const finalSegment = url.pathname.split("/").at(-1) ?? "";
+  const hasFileExtension = finalSegment.includes(".");
+
+  if (
+    url.pathname !== "/" &&
+    !url.pathname.endsWith("/") &&
+    !hasFileExtension
+  ) {
+    url.pathname += "/";
+  }
+
+  return url;
+};
+
+const canonical = toSiteUrl(canonicalPath ?? Astro.url);
 const canonicalUrl = canonical.href;
 const socialImageUrl = new URL(socialImage, siteOrigin).href;
 
+// The approved light theme is the production default.
+// Set PUBLIC_SITE_THEME="dark" to build the original dark design.
+const siteTheme = import.meta.env.PUBLIC_SITE_THEME ?? "light";
+const isLightTheme = siteTheme === "light";
+
+// Theme and indexing are intentionally independent. Set this flag only
+// for non-production preview builds.
+const isNoIndexBuild =
+  import.meta.env.PUBLIC_SITE_NOINDEX === "true";
+const effectiveRobots = isNoIndexBuild
+  ? "noindex,nofollow"
+  : robots;
+
 // Prev/Next (absolute for <head> links)
-const prevUrl = prevHref ? new URL(prevHref, siteOrigin).href : null;
-const nextUrl = nextHref ? new URL(nextHref, siteOrigin).href : null;
+const prevUrl = prevHref ? toSiteUrl(prevHref).href : null;
+const nextUrl = nextHref ? toSiteUrl(nextHref).href : null;
 
 const organizationSchema = {
   "@context": "https://schema.org",
@@ -81,7 +109,7 @@ const organizationSchema = {
     <title>{title}</title>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="description" content={description} />
-    <meta name="robots" content={robots} />
+    <meta name="robots" content={effectiveRobots} />
 
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
@@ -99,6 +127,10 @@ const organizationSchema = {
     {prevUrl ? <link rel="prev" href={prevUrl} /> : null}
     {nextUrl ? <link rel="next" href={nextUrl} /> : null}
 
+    {isLightTheme ? (
+      <link rel="stylesheet" href="/styles/theme-light.css" />
+    ) : null}
+
     <script
       is:inline
       type="application/ld+json"
@@ -106,7 +138,7 @@ const organizationSchema = {
     />
     </head>
 
-  <body class="site-shell">
+  <body class:list={["site-shell", isLightTheme && "theme-light"]}>
     <a class="skip-link" href="#main-content">Skip to main content</a>
 
     <header class="site-header">

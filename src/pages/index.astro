@@ -38,12 +38,16 @@ const featuredImageDimensions: Record<
     height: 830,
   },
   "mapleton-modern": {
-    width: 2048,
-    height: 1536,
+    width: 2000,
+    height: 1500,
   },
   "desert-contemporary": {
     width: 2000,
     height: 1500,
+  },
+  "zion-estate": {
+    width: 1024,
+    height: 683,
   },
 };
 
@@ -75,20 +79,6 @@ const featuredImageDimensions: Record<
   <div class="hero-overlay"></div>
 
   <div class="hero-shell">
-    <!-- Logo + tagline row -->
-    <!-- <div class="hero-brand-row">
-      <img
-        src="/branding/uoh-logo-stacked-light.png"
-        alt="Utah Oasis Homes"
-        class="hero-logo-mark"
-        loading="lazy"
-      />
-
-      <div class="hero-eyebrow">
-        PRIVATE RESORT LIVING · SOUTHERN UTAH &amp; WASATCH FRONT
-      </div>
-    </div> -->
-
 	<div class="hero-logo-row">
     <img
       class="hero-logo-mark"
@@ -107,7 +97,7 @@ const featuredImageDimensions: Record<
   </div>
 
 <div class="hero-eyebrow">
-  PRIVATE RESORT LIVING · SOUTHERN UTAH &amp; WASATCH FRONT
+  WASATCH FRONT &amp; SOUTHERN UTAH
 </div>
 
 
@@ -127,7 +117,7 @@ const featuredImageDimensions: Record<
       </div>
 
       <div class="hero-meta">
-        <span><strong>Southern Utah &amp; Wasatch Front</strong></span>
+        <span><strong>Wasatch Front &amp; Southern Utah</strong></span>
       </div>
     </div>
   </div>
@@ -173,13 +163,13 @@ const featuredImageDimensions: Record<
     <div class="card-grid">
       {featuredHomes.map((home) => (
         <article class="card featured-home-card">
-          <a href={`/homes/${home.id}`} class="featured-home-link">
+          <a href={`/homes/${home.slug}`} class="featured-home-link">
             <div class="featured-home-media">
               <img
                 src={home.data.coverImage}
                 alt={`${home.data.title} in ${home.data.location}`}
-                width={featuredImageDimensions[home.id]?.width}
-                height={featuredImageDimensions[home.id]?.height}
+                width={featuredImageDimensions[home.slug]?.width}
+                height={featuredImageDimensions[home.slug]?.height}
                 loading="lazy"
                 decoding="async"
               />
@@ -248,17 +238,17 @@ const featuredImageDimensions: Record<
     </div>
     <div class="card-grid">
       <article class="card">
-        <h3>Southern Utah & Sand Hollow</h3>
-        <p>
-          Desert modern and resort-style homes oriented to dramatic cliffs, water, and expansive
-          views.
-        </p>
-      </article>
-      <article class="card">
         <h3>Wasatch Front</h3>
         <p>
           Refined custom homes designed for family living, views, and four-season comfort along the
           Wasatch corridor.
+        </p>
+      </article>
+      <article class="card">
+        <h3>Southern Utah & Sand Hollow</h3>
+        <p>
+          Desert modern and resort-style homes oriented to dramatic cliffs, water, and expansive
+          views.
         </p>
       </article>
     </div>

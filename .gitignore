@@ -24,3 +24,5 @@ pnpm-debug.log*
 .idea/
 
 *-preview.zip
+*-preview2.zip
+*-production.zip

@@ -1,6 +1,19 @@
 ---
 const currentPath = Astro.url.pathname;
 const isStartPage = currentPath.startsWith("/start");
+const siteTheme = import.meta.env.PUBLIC_SITE_THEME ?? "light";
+const isLightTheme = siteTheme === "light";
+const headerLogo = isLightTheme
+  ? {
+      src: "/branding/uoh-logo-orange-wide.png",
+      width: 2823,
+      height: 495,
+    }
+  : {
+      src: "/branding/uoh-logo-blue-wide-lighter.png",
+      width: 2718,
+      height: 501,
+    };
 ---
 
 <div class="site-header-inner">
@@ -8,8 +21,11 @@ const isStartPage = currentPath.startsWith("/start");
     <a href="/" class="nav-logo" aria-label="Utah Oasis Homes home page">
       <img
         class="brand-logo"
-        src="/branding/uoh-logo-blue-wide-lighter.png"
+        src={headerLogo.src}
         alt="Utah Oasis Homes"
+        width={headerLogo.width}
+        height={headerLogo.height}
+        decoding="async"
       />
     </a>
 
