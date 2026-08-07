@@ -1,67 +1,127 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
+
+const showTeamConcept = import.meta.env.PUBLIC_SHOW_TEAM_CONCEPT === 'true';
 ---
 
 <BaseLayout
-  title="About Utah Oasis Homes | Custom Home Builder"
-  description="Learn how Utah Oasis Homes approaches custom home design and construction through careful listening, purposeful decisions, and clear communication."
+  title="Who We Are | Utah Oasis Homes"
+  description="Meet Utah Oasis Homes and learn about the personal attention, thoughtful planning, and hands-on care behind every custom home."
   canonicalPath="/about"
 >
-  <section class="section">
-    <div class="section-header">
-      <h1 class="section-title">About Utah Oasis Homes</h1>
-      <p class="section-subtitle">
-        We create thoughtfully designed homes that feel personal, restorative, and deeply connected to
-        the way you live.
+  <section class="section about-page">
+    <header class="about-page-intro">
+      <div class="pill-eyebrow">Who We Are</div>
+      <h1>Personal Attention. Thoughtful Homes. Lasting Craftsmanship.</h1>
+      <p>
+        Utah Oasis Homes brings experience, personal oversight, and a genuine commitment to each
+        home—creating places that feel distinctive, restorative, and deeply connected to the people
+        who live there.
       </p>
-    </div>
+    </header>
 
-    <div class="card about-intro-card">
-      <p style="font-size: 0.95rem; line-height: 1.7; color: var(--muted);">
-        With more than 25 years of construction experience, Utah Oasis Homes creates distinctive
-        custom homes shaped around each client’s vision, lifestyle, and setting. Our work is guided
-        by a hands-on approach, honest communication, thoughtful planning, and close attention to
-        detail.
-      </p>
+    {showTeamConcept ? (
+      <figure class="about-team-hero">
+        <img
+          src="/images/about-team-concept.webp"
+          alt="Photography concept showing a custom home builder and team at an active residential framing site"
+          width="1408"
+          height="768"
+          loading="eager"
+          fetchpriority="high"
+          decoding="async"
+        />
 
-      <p style="font-size: 0.95rem; line-height: 1.7; color: var(--muted); margin-top: 1rem;">
-        From the first conversation through completion, we focus on making the building experience
-        clear, collaborative, and carefully managed—resulting in a home that feels personal,
-        enduring, and unmistakably yours.
-      </p>
-    </div>
-  </section>
+        <figcaption class="about-team-concept-label">
+          Photography concept <span aria-hidden="true">•</span> Final team photo forthcoming
+        </figcaption>
+      </figure>
+    ) : null}
 
-  <section class="section" aria-labelledby="about-principles-title">
-    <div class="section-header">
-      <h2 class="section-title" id="about-principles-title">What Guides the Work</h2>
-      <p class="section-subtitle">
-        A thoughtful home begins with listening carefully and making each decision with purpose.
-      </p>
-    </div>
+    <section class="about-story" aria-labelledby="about-story-title">
+      <div class="about-story-copy">
+        <div class="pill-eyebrow">A Personal Approach</div>
+        <h2 id="about-story-title">A more personal way to build</h2>
 
-    <div class="card-grid">
-      <article class="card">
-        <h3>Listen First</h3>
         <p>
-          Your priorities, routines, and vision shape the direction of the home from the beginning.
+          With more than 25 years of construction experience, Utah Oasis Homes creates distinctive
+          custom homes shaped around each client’s vision, lifestyle, and setting. Every project is
+          guided by honest communication, thoughtful planning, and close attention to detail.
         </p>
-      </article>
 
-      <article class="card">
-        <h3>Design with Purpose</h3>
         <p>
-          Every room, view, and material should contribute to how the home feels and functions.
+          That experience is reflected in a team of skilled craftspeople who understand that lasting
+          quality comes from doing the details well. Troy stays closely involved from the first
+          conversation through completion, helping keep decisions clear, the work carefully
+          coordinated, and the experience genuinely collaborative.
         </p>
-      </article>
 
-      <article class="card">
-        <h3>Build with Care</h3>
         <p>
-          Clear communication and careful execution help turn a thoughtful design into a lasting
-          home.
+          Over the years, Troy has carefully selected highly regarded subcontractors, architects,
+          designers, engineers, and trade partners whose skill, reliability, and standards align
+          with his own. Together, they bring considered design and experienced craftsmanship to
+          every stage of the home—resulting in a place that feels personal, enduring, and
+          unmistakably yours.
         </p>
-      </article>
-    </div>
+      </div>
+
+      <aside class="about-experience" aria-label="Utah Oasis Homes experience and approach">
+        <div class="about-experience-primary">
+          <strong>25+</strong>
+          <span>Years of construction experience</span>
+        </div>
+
+        <div class="about-experience-detail">
+          <span>Direct Involvement</span>
+          <p>Personal guidance and oversight throughout the building experience.</p>
+        </div>
+
+        <div class="about-experience-detail">
+          <span>Built Around You</span>
+          <p>A home shaped by your priorities, your property, and the way you want to live.</p>
+        </div>
+      </aside>
+    </section>
+
+    <section class="about-principles" aria-labelledby="about-principles-title">
+      <div class="about-principles-heading">
+        <div class="pill-eyebrow">What Guides the Work</div>
+        <h2 id="about-principles-title">The standards behind every home</h2>
+        <p>
+          These values shape every relationship, decision, and detail from the first conversation
+          through completion.
+        </p>
+      </div>
+
+      <div class="about-principles-grid">
+        <article>
+          <h3>Listen First</h3>
+          <p>Your priorities, routines, and vision shape the direction of the home from the beginning.</p>
+        </article>
+
+        <article>
+          <h3>Design with Purpose</h3>
+          <p>Every room, view, and material contributes to how the home feels and functions.</p>
+        </article>
+
+        <article>
+          <h3>Build with Care</h3>
+          <p>Clear communication and careful execution turn a thoughtful design into a lasting home.</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="about-page-cta" aria-labelledby="about-cta-title">
+      <div>
+        <div class="pill-eyebrow">Start a Conversation</div>
+        <h2 id="about-cta-title">Let’s talk about the home you’re imagining.</h2>
+        <p>
+          Share where you hope to build, how you want to live, and what would make the home feel
+          distinctly yours.
+        </p>
+      </div>
+
+      <a href="/start" class="btn btn-primary">Start Your Home</a>
+    </section>
   </section>
 </BaseLayout>

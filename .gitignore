@@ -26,3 +26,6 @@ pnpm-debug.log*
 *-preview.zip
 *-preview2.zip
 *-production.zip
+
+# Temporarily staged only by the team-photo preview build
+public/images/about-team-concept.webp

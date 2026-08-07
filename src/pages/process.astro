@@ -3,19 +3,21 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 ---
 
 <BaseLayout
-  title="Our Process | Utah Oasis Homes"
+  title="How We Build | Utah Oasis Homes"
   description="Explore the Utah Oasis Homes building process, from early discovery and design through construction, walkthrough, and move-in."
   canonicalPath="/process"
 >
-  <section class="section" id="process-page">
-    <div class="section-header">
-      <h1 class="section-title">Our Process</h1>
-      <p class="section-subtitle">
-        A thoughtful, well-managed experience that keeps decisions clear and progress easy to follow.
+  <section class="section process-page" id="process-page">
+    <header class="process-page-intro">
+      <div class="pill-eyebrow">How We Build</div>
+      <h1>A Calm, Clear Building Experience</h1>
+      <p>
+        From the first conversation through move-in, every phase is thoughtfully guided,
+        carefully managed, and centered on the way you want to live.
       </p>
-    </div>
+    </header>
 
-    <div class="process-page-image">
+    <div class="process-page-hero">
       <img
         src="/images/process-courtyard.jpg"
         alt="A covered courtyard with skylights, large windows, and indoor-outdoor living spaces"
@@ -23,37 +25,143 @@ import BaseLayout from '../layouts/BaseLayout.astro';
         height="1050"
         loading="eager"
       />
+
+      <aside class="process-page-promise" aria-labelledby="process-promise-title">
+        <div class="process-page-promise-label">Our Promise</div>
+        <h2 id="process-promise-title">You will always know what comes next.</h2>
+        <p>
+          Direct communication, thoughtful guidance, and personal oversight keep decisions
+          clear and progress easy to follow.
+        </p>
+      </aside>
     </div>
 
-    <div class="card-grid">
-      <article class="card">
-        <h2>01 — Discover</h2>
-        <p>
-          We begin by understanding your lifestyle, priorities, budget, land, and the ideas already
-          taking shape. This gives every decision that follows a clear foundation.
-        </p>
+    <div class="process-timeline" aria-label="The four phases of building your home">
+      <article class="process-phase">
+        <div class="process-phase-marker" aria-hidden="true">01</div>
+        <div class="process-phase-main">
+          <div class="process-phase-copy">
+            <div class="process-phase-label">Discover</div>
+            <h2>Begin with what matters most</h2>
+            <p>
+              We start by listening. Together, we clarify how you want to live, what you value,
+              and how your property, priorities, investment, and timing shape the opportunity.
+            </p>
+          </div>
+          <div class="process-phase-expectations">
+            <h3>What to expect</h3>
+            <ul>
+              <li>Vision and lifestyle conversation</li>
+              <li>Property and site considerations</li>
+              <li>Budget and timeline alignment</li>
+            </ul>
+          </div>
+        </div>
       </article>
-      <article class="card">
-        <h2>02 — Design</h2>
-        <p>
-          Together with trusted design partners, we translate your priorities into a home that responds
-          thoughtfully to its site, natural light, views, and daily use.
-        </p>
+
+      <article class="process-phase">
+        <div class="process-phase-marker" aria-hidden="true">02</div>
+        <div class="process-phase-main">
+          <div class="process-phase-copy">
+            <div class="process-phase-label">Design</div>
+            <h2>Shape the home around your life</h2>
+            <p>
+              With trusted design partners, we translate your priorities into a cohesive home
+              that responds to its setting, natural light, views, daily routines, and the way you gather.
+            </p>
+          </div>
+          <div class="process-phase-expectations">
+            <h3>What to expect</h3>
+            <ul>
+              <li>Floor-plan development and refinement</li>
+              <li>Materials, finishes, and key selections</li>
+              <li>Clear decisions before construction</li>
+            </ul>
+          </div>
+        </div>
       </article>
-      <article class="card">
-        <h2>03 — Build</h2>
-        <p>
-          During construction, clear schedules, regular updates, and purposeful site walkthroughs keep
-          you informed and connected to the progress of your home.
-        </p>
+
+      <article class="process-phase">
+        <div class="process-phase-marker" aria-hidden="true">03</div>
+        <div class="process-phase-main">
+          <div class="process-phase-copy">
+            <div class="process-phase-label">Build</div>
+            <h2>Bring the vision to life with care</h2>
+            <p>
+              Construction is carefully coordinated and personally overseen. Regular communication
+              and purposeful walkthroughs keep you connected without making the process feel overwhelming.
+            </p>
+          </div>
+          <div class="process-phase-expectations">
+            <h3>What to expect</h3>
+            <ul>
+              <li>Coordinated schedules and trade partners</li>
+              <li>Consistent progress communication</li>
+              <li>Site walkthroughs and quality oversight</li>
+            </ul>
+          </div>
+        </div>
       </article>
-      <article class="card">
-        <h2>04 — Live</h2>
-        <p>
-          We complete the process with a thoughtful handover, a detailed walkthrough, and support as you
-          settle into a home designed around the way you live.
-        </p>
+
+      <article class="process-phase">
+        <div class="process-phase-marker" aria-hidden="true">04</div>
+        <div class="process-phase-main">
+          <div class="process-phase-copy">
+            <div class="process-phase-label">Live</div>
+            <h2>Settle into a home made for you</h2>
+            <p>
+              We finish with the same attention that guided the build, preparing you for a confident
+              handover and remaining available as you settle into the rhythms of your new home.
+            </p>
+          </div>
+          <div class="process-phase-expectations">
+            <h3>What to expect</h3>
+            <ul>
+              <li>Detailed final walkthrough</li>
+              <li>Thoughtful handover and orientation</li>
+              <li>Continued support after move-in</li>
+            </ul>
+          </div>
+        </div>
       </article>
     </div>
+
+    <section class="process-consistency" aria-labelledby="process-consistency-title">
+      <div class="process-consistency-heading">
+        <div class="pill-eyebrow">From Start to Finish</div>
+        <h2 id="process-consistency-title">What Remains Consistent Throughout</h2>
+        <p>A steady, personal approach keeps the experience grounded at every stage.</p>
+      </div>
+
+      <div class="process-consistency-grid">
+        <article>
+          <span aria-hidden="true">01</span>
+          <h3>Direct Communication</h3>
+          <p>Responsive conversations and clear updates keep you informed and involved.</p>
+        </article>
+        <article>
+          <span aria-hidden="true">02</span>
+          <h3>Thoughtful Guidance</h3>
+          <p>Important decisions are considered in context, with practical direction when you need it.</p>
+        </article>
+        <article>
+          <span aria-hidden="true">03</span>
+          <h3>Careful Oversight</h3>
+          <p>Quality, craftsmanship, and the details that shape daily life receive personal attention.</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="process-page-cta" aria-labelledby="process-cta-title">
+      <div>
+        <div class="pill-eyebrow">Ready When You Are</div>
+        <h2 id="process-cta-title">Let’s Begin with a Conversation</h2>
+        <p>
+          Tell us what you are imagining, where you hope to build, and what matters most to you.
+          We will help you understand the next step.
+        </p>
+      </div>
+      <a href="/start" class="btn btn-primary">Start Your Home</a>
+    </section>
   </section>
 </BaseLayout>

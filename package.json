@@ -5,6 +5,7 @@
   "scripts": {
     "dev": "astro dev",
     "build": "astro build",
+    "build:team-preview": "node scripts/build-team-preview.mjs",
     "preview": "astro preview",
     "astro": "astro"
   },
