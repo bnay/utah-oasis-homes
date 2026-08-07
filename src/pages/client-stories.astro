@@ -28,11 +28,11 @@ const renderedStories = await Promise.all(
 ---
 
 <BaseLayout
-  title="Client Stories | Utah Oasis Homes"
-  description="Read what homeowners have shared about their experience building with Utah Oasis Homes."
+  title="Custom Home Client Stories | Utah Oasis Homes"
+  description="Read what Utah homeowners have shared about working directly with Utah Oasis Homes, from early planning and construction through life in the finished home."
   canonicalPath="/client-stories"
 >
-  <section class="section">
+  <section class="section client-stories-page">
     <nav aria-label="Breadcrumb" class="breadcrumbs">
       <ol class="breadcrumbs-list">
         <li class="breadcrumbs-item">
@@ -45,15 +45,32 @@ const renderedStories = await Promise.all(
       </ol>
     </nav>
 
-    <div class="section-header">
-      <div class="pill-eyebrow">Homeowner Experiences</div>
+    <header class="stories-page-intro">
+      <div class="stories-page-copy">
+        <div class="pill-eyebrow">Homeowner Experiences</div>
+        <h1>What It Feels Like to Build With Us</h1>
+        <p>
+          A custom home is measured by more than the finished rooms. Hear directly from homeowners about
+          the decisions, communication, workmanship, and follow-through they experienced while building
+          with Utah Oasis Homes.
+        </p>
+      </div>
 
-      <h1 class="section-title">Client Stories</h1>
+      {stories[0] ? (
+        <aside class="stories-page-feature" aria-label="Featured homeowner reflection">
+          <span class="stories-page-quote-mark" aria-hidden="true">“</span>
+          <p>“{stories[0].data.excerpt}”</p>
+          <footer>— {stories[0].data.customers}</footer>
+        </aside>
+      ) : null}
+    </header>
 
-      <p class="section-subtitle">
-        Building a custom home is a deeply personal experience. Here are a few reflections from
-        homeowners who trusted Utah Oasis Homes with theirs.
-      </p>
+    <div class="stories-page-heading">
+      <div>
+        <div class="pill-eyebrow">In Their Own Words</div>
+        <h2>Complete homeowner stories</h2>
+      </div>
+      <p>Real accounts of the experience before, during, and after construction.</p>
     </div>
 
     <div class="client-stories-list">
@@ -78,5 +95,16 @@ const renderedStories = await Promise.all(
         </article>
       ))}
     </div>
+
+    <section class="stories-page-cta" aria-labelledby="stories-cta-title">
+      <div>
+        <div class="pill-eyebrow">Begin Your Own Story</div>
+        <h2 id="stories-cta-title">Let’s talk about the home you have in mind.</h2>
+        <p>
+          Start with a straightforward conversation about your property, priorities, and timing.
+        </p>
+      </div>
+      <a href="/start" class="btn btn-primary">Start a Conversation</a>
+    </section>
   </section>
 </BaseLayout>

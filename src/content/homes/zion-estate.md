@@ -1,7 +1,12 @@
 ---
 title: Zion Estate
 location: Hurricane, Utah
+serviceArea: Southern Utah
+market: St. George Area
+seoTitle: Zion Estate Custom Home in Hurricane, Utah | Utah Oasis Homes
+seoDescription: Explore Zion Estate, a Southern Utah retreat in Hurricane with a private courtyard, outdoor kitchen, pool, spa, and generous family spaces.
 coverImage: /images/homes/zion-estate/zion-estate-hero.webp
+coverAlt: Zion Estate custom home framed by the desert landscape of Hurricane, Utah
 # tags: ["Southern Utah", "Outdoor Living", "Pool"]
 featured: true
 order: 3

@@ -89,8 +89,8 @@ const breadcrumbsJsonLd = {
 ---
 
 <BaseLayout
-  title="Our Homes | Utah Oasis Homes"
-  description="Explore custom homes across Utah, each shaped by its setting, its owners, and the way they live."
+  title="Custom Homes in Utah | Utah Oasis Homes"
+  description="Explore custom homes built by Utah Oasis Homes across the Wasatch Front and Southern Utah, from mountain-connected family residences to desert retreats."
   canonicalPath="/homes"
 >
 
@@ -105,7 +105,7 @@ const breadcrumbsJsonLd = {
     set:html={JSON.stringify(itemListJsonLd)}
   />
 
-  <section>
+  <section class="homes-page">
     <nav aria-label="Breadcrumb" class="breadcrumbs">
       <ol class="breadcrumbs-list">
         <li class="breadcrumbs-item">
@@ -118,12 +118,46 @@ const breadcrumbsJsonLd = {
       </ol>
     </nav>
 
-      <div class="section-header">
-      <div class="pill-eyebrow">Our Work</div>
-      <h1 class="section-title">Our Homes</h1>
-      <p class="section-subtitle">
-        A collection of custom homes shaped by their setting, their owners, and the way each family lives.
-      </p>
+    <header class="portfolio-page-intro">
+      <div class="portfolio-page-copy">
+        <div class="pill-eyebrow">Our Work</div>
+        <h1>Homes Shaped by People and Place</h1>
+        <p>
+          No two properties, families, or ambitions are the same. Explore custom residences across the
+          Wasatch Front and Southern Utah—from mountain-connected family homes to desert retreats—each
+          resolved through site-responsive design, direct builder involvement, and skilled execution.
+        </p>
+
+        <nav class="homes-region-links" aria-label="Explore homes by region">
+          <a href="/custom-homes/utah-county">Wasatch Front & Utah County</a>
+          <a href="/custom-homes/st-george">St. George & Southern Utah</a>
+        </nav>
+      </div>
+
+      <div class="portfolio-page-visual" aria-label="A selection of custom homes by Utah Oasis Homes">
+        {orderedHomes.slice(0, 3).map((home, index) => (
+          <a
+            class:list={["portfolio-page-image", index === 0 && "portfolio-page-image--primary"]}
+            href={`/homes/${home.slug}`}
+            aria-label={`View ${home.data.title}`}
+          >
+            <img
+              src={home.data.coverImage}
+              alt={`${home.data.title} in ${home.data.location}`}
+              loading={index === 0 ? "eager" : "lazy"}
+              decoding="async"
+            />
+          </a>
+        ))}
+      </div>
+    </header>
+
+    <div class="portfolio-page-heading">
+      <div>
+        <div class="pill-eyebrow">Selected Homes</div>
+        <h2>Designed for the people who live there</h2>
+      </div>
+      <p>Each home began with a particular family, property, and vision for everyday life.</p>
     </div>
 
 {allTags.length ? (
@@ -179,6 +213,17 @@ const breadcrumbsJsonLd = {
     No homes found.
   </p>
 )}
+
+    <section class="portfolio-page-cta" aria-labelledby="portfolio-cta-title">
+      <div>
+        <div class="pill-eyebrow">Your Ideas, Your Home</div>
+        <h2 id="portfolio-cta-title">Let’s talk about the home you’ve been imagining.</h2>
+        <p>
+          Share your property, priorities, and what would make the finished home feel distinctly yours.
+        </p>
+      </div>
+      <a href="/start" class="btn btn-primary">Start Your Home</a>
+    </section>
 
   </section>
 </BaseLayout>

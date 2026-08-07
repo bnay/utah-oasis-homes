@@ -54,8 +54,10 @@ const featuredImageDimensions: Record<
 ---
 
 <BaseLayout
-  title="Utah Oasis Homes | Custom Homes in Utah"
-  description="Custom homes shaped by the way you live, the people you gather, and the Utah landscape outside your door."
+  title="Utah Custom Home Builder | Utah Oasis Homes"
+  description="Utah Oasis Homes builds custom homes across the Wasatch Front and Southern Utah with direct builder involvement, purposeful design, and enduring craftsmanship."
+  canonicalPath="/"
+  socialImageAlt="Utah Oasis Homes custom home builder"
 >
 
 <section class="hero" id="hero">
@@ -107,8 +109,8 @@ const featuredImageDimensions: Record<
       <h1 class="hero-title">Every Home Should Be an Oasis.</h1>
 
       <p class="hero-subtitle">
-        A home shaped around the way you live, the people you gather, and the landscape outside your
-        door—thoughtfully designed and carefully built to feel distinctly yours.
+        A home planned for your routines, your relationships, and the land around it—then brought to
+        life with disciplined coordination and enduring craftsmanship.
       </p>
 
       <div class="hero-ctas">
@@ -125,30 +127,30 @@ const featuredImageDimensions: Record<
 
   <section class="section" id="differentiators">
     <div class="section-header">
-      <h2 class="section-title">A More Thoughtful Way to Build</h2>
+      <h2 class="section-title">A Better Building Experience, by Design</h2>
       <p class="section-subtitle">
-        Clear guidance, careful decisions, and a home shaped around the way you want to live.
+        Direct access to your builder, purposeful decisions, and steady execution from the first
+        conversation through move-in.
       </p>
     </div>
     <div class="card-grid">
       <article class="card">
         <h3>Designed for Everyday Escape</h3>
         <p>
-          Pools, courtyards, and seamless indoor–outdoor spaces that make home feel like the place you
-          would rather be.
+          Courtyards, pools, and indoor–outdoor rooms turn ordinary days into time well spent at home.
         </p>
       </article>
       <article class="card">
-        <h3>Shaped by the Landscape</h3>
-        <p>Desert cliffs, mountain views, and natural light drive every design decision.</p>
+        <h3>Responsive to the Land</h3>
+        <p>Sun, views, privacy, and climate inform the home’s orientation, openings, and outdoor spaces.</p>
       </article>
       <article class="card">
         <h3>Guided from Start to Finish</h3>
-        <p>Clear communication, thoughtful guidance, and steady progress at every stage.</p>
+        <p>Direct involvement from Troy, regular updates, and defined next steps keep the work moving.</p>
       </article>
       <article class="card">
         <h3>Crafted for the Long Term</h3>
-        <p>Thoughtful materials, careful detailing, and workmanship designed to endure.</p>
+        <p>Durable materials, precise detailing, and proven tradespeople support lasting quality.</p>
       </article>
     </div>
   </section>
@@ -157,7 +159,7 @@ const featuredImageDimensions: Record<
     <div class="section-header">
       <h2 class="section-title">Selected Homes</h2>
       <p class="section-subtitle">
-        A collection of homes shaped by their setting, their owners, and the way each family lives.
+        Distinct residences that respond to their owners, their properties, and the demands of daily life.
       </p>
     </div>
     <div class="card-grid">
@@ -167,7 +169,7 @@ const featuredImageDimensions: Record<
             <div class="featured-home-media">
               <img
                 src={home.data.coverImage}
-                alt={`${home.data.title} in ${home.data.location}`}
+                alt={home.data.coverAlt}
                 width={featuredImageDimensions[home.slug]?.width}
                 height={featuredImageDimensions[home.slug]?.height}
                 loading="lazy"
@@ -191,65 +193,67 @@ const featuredImageDimensions: Record<
 
   <section class="section" id="experience">
     <div class="section-header">
-      <h2 class="section-title">A Calm, Clear Building Experience</h2>
+      <div class="pill-eyebrow">The Journey</div>
+      <h2 class="section-title">Your Home-Building Journey</h2>
       <p class="section-subtitle">
-        A thoughtful process that keeps decisions clear, communication steady, and you confident at
-        every stage.
+        Four connected stages take your home from the first conversation through move-in.
       </p>
     </div>
-    <div class="card-grid">
-      <article class="card">
-        <h3>01 — Discover</h3>
-        <p>
-          We learn your vision, lifestyle, budget, and land so we can design a home around the way
-          you live.
-        </p>
+    <div class="card-grid experience-overview-grid">
+      <article class="card experience-overview-card">
+        <span class="experience-overview-number" aria-hidden="true">01</span>
+        <h3>Discover</h3>
+        <p>Define the vision, priorities, property, and investment.</p>
       </article>
-      <article class="card">
-        <h3>02 — Design</h3>
-        <p>
-          Working with trusted architects and designers, we shape a home that captures your
-          priorities and maximizes your site.
-        </p>
+      <article class="card experience-overview-card">
+        <span class="experience-overview-number" aria-hidden="true">02</span>
+        <h3>Design</h3>
+        <p>Translate your priorities, property, and budget into a cohesive plan.</p>
       </article>
-      <article class="card">
-        <h3>03 — Build</h3>
-        <p>
-          Clear schedules, regular updates, and careful craftsmanship keep the work moving with purpose
-          and transparency.
-        </p>
+      <article class="card experience-overview-card">
+        <span class="experience-overview-number" aria-hidden="true">03</span>
+        <h3>Build</h3>
+        <p>Coordinate trades, schedules, and quality control with direct oversight.</p>
       </article>
-      <article class="card">
-        <h3>04 — Live</h3>
-        <p>
-          Settle into a home that feels restorative, personal, and deeply connected to the way you live.
-        </p>
+      <article class="card experience-overview-card">
+        <span class="experience-overview-number" aria-hidden="true">04</span>
+        <h3>Live</h3>
+        <p>Move into a home planned for how you want each day to work and feel.</p>
       </article>
+    </div>
+    <div class="experience-overview-action">
+      <a href="/process" class="btn btn-ghost">See How We Build</a>
     </div>
   </section>
 
   <section class="section" id="locations">
     <div class="section-header">
-      <h2 class="section-title">Designed for Utah’s Most Inspiring Settings</h2>
+      <h2 class="section-title">Built for Two Distinct Utah Landscapes</h2>
       <p class="section-subtitle">
-        From red rock desert to mountain ridgelines, each home is shaped to feel naturally connected to
-        its surroundings.
+        The Wasatch Front and Southern Utah call for different responses to climate, views, materials,
+        and outdoor living.
       </p>
     </div>
     <div class="card-grid">
-      <article class="card">
+      <article class="card service-area-card">
         <h3>Wasatch Front</h3>
         <p>
           Refined custom homes designed for family living, views, and four-season comfort along the
           Wasatch corridor.
         </p>
+        <a class="service-area-link" href="/custom-homes/wasatch-front">
+          Explore Wasatch Front custom homes →
+        </a>
       </article>
-      <article class="card">
+      <article class="card service-area-card">
         <h3>Southern Utah & Sand Hollow</h3>
         <p>
           Desert modern and resort-style homes oriented to dramatic cliffs, water, and expansive
           views.
         </p>
+        <a class="service-area-link" href="/custom-homes/southern-utah">
+          Explore Southern Utah custom homes →
+        </a>
       </article>
     </div>
   </section>

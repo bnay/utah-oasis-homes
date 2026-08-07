@@ -1,7 +1,11 @@
 ---
 title: Mountain Contemporary
 location: Wasatch Front, Utah
+serviceArea: Wasatch Front
+seoTitle: Mountain Contemporary Home on the Wasatch Front | Utah Oasis Homes
+seoDescription: Explore a mountain contemporary home with angular rooflines, stone, warm wood, expansive glass, and refined interiors along the Wasatch Front.
 coverImage: /images/homes/mountain-contemporary/mountain-contemporary-exterior-front.webp
+coverAlt: Mountain contemporary custom home with stone and warm wood on the Wasatch Front
 # tags: ["Wasatch Front"]
 featured: false
 order: 7

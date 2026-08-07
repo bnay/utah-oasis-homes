@@ -1,7 +1,12 @@
 ---
 title: Mapleton Canyon
 location: Mapleton, Utah
+serviceArea: Wasatch Front
+market: Utah County
+seoTitle: Mapleton Canyon Custom Home in Mapleton, Utah | Utah Oasis Homes
+seoDescription: Explore a spacious Mapleton custom home with generous gathering areas, comfortable private spaces, and an easy connection to its mountain setting.
 coverImage: /images/homes/mapleton-canyon-1-optimized.jpg
+coverAlt: Mapleton Canyon custom home in the mountain setting of Mapleton, Utah
 # tags: ["Wasatch Front", "Outdoor Living"]
 order: 5
 featured: false

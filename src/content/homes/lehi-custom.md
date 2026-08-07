@@ -1,7 +1,12 @@
 ---
 title: Lehi Custom
 location: Lehi, Utah
+serviceArea: Wasatch Front
+market: Utah County
+seoTitle: Lehi Custom Home in Lehi, Utah | Utah Oasis Homes
+seoDescription: Tour a refined Lehi custom home with a soaring great room, warm finishes, theater, upstairs loft, and indoor basketball court.
 coverImage: /images/homes/lehi-custom/lehi-custom-exterior-front.webp
+coverAlt: Front exterior of a refined custom home in Lehi, Utah
 # tags: ["Wasatch Front"]
 order: 6
 featured: false

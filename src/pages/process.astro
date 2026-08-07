@@ -3,17 +3,25 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 ---
 
 <BaseLayout
-  title="How We Build | Utah Oasis Homes"
-  description="Explore the Utah Oasis Homes building process, from early discovery and design through construction, walkthrough, and move-in."
+  title="How We Build Custom Homes | Utah Oasis Homes"
+  description="Explore the Utah Oasis Homes custom building process, from discovery and design through construction, final walkthrough, and move-in."
   canonicalPath="/process"
 >
   <section class="section process-page" id="process-page">
+    <nav aria-label="Breadcrumb" class="breadcrumbs">
+      <ol class="breadcrumbs-list">
+        <li class="breadcrumbs-item"><a href="/">Home</a></li>
+        <li class="breadcrumbs-separator" aria-hidden="true">→</li>
+        <li class="breadcrumbs-item breadcrumbs-current">How We Build</li>
+      </ol>
+    </nav>
+
     <header class="process-page-intro">
       <div class="pill-eyebrow">How We Build</div>
       <h1>A Calm, Clear Building Experience</h1>
       <p>
-        From the first conversation through move-in, every phase is thoughtfully guided,
-        carefully managed, and centered on the way you want to live.
+        From the first conversation through move-in, every phase has defined decisions, dependable
+        communication, and direct oversight from the person responsible for the work.
       </p>
     </header>
 
@@ -30,8 +38,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
         <div class="process-page-promise-label">Our Promise</div>
         <h2 id="process-promise-title">You will always know what comes next.</h2>
         <p>
-          Direct communication, thoughtful guidance, and personal oversight keep decisions
-          clear and progress easy to follow.
+          Regular updates, timely decisions, and hands-on coordination make progress easy to follow.
         </p>
       </aside>
     </div>
@@ -66,8 +73,8 @@ import BaseLayout from '../layouts/BaseLayout.astro';
             <div class="process-phase-label">Design</div>
             <h2>Shape the home around your life</h2>
             <p>
-              With trusted design partners, we translate your priorities into a cohesive home
-              that responds to its setting, natural light, views, daily routines, and the way you gather.
+              With trusted design partners, we translate your priorities into a cohesive plan for
+              room relationships, natural light, views, materials, and daily routines.
             </p>
           </div>
           <div class="process-phase-expectations">
@@ -88,8 +95,9 @@ import BaseLayout from '../layouts/BaseLayout.astro';
             <div class="process-phase-label">Build</div>
             <h2>Bring the vision to life with care</h2>
             <p>
-              Construction is carefully coordinated and personally overseen. Regular communication
-              and purposeful walkthroughs keep you connected without making the process feel overwhelming.
+              Troy coordinates the work, monitors quality, and keeps schedules and trades aligned.
+              Progress updates and purposeful walkthroughs keep you connected without requiring you
+              to manage the job yourself.
             </p>
           </div>
           <div class="process-phase-expectations">
@@ -130,24 +138,40 @@ import BaseLayout from '../layouts/BaseLayout.astro';
       <div class="process-consistency-heading">
         <div class="pill-eyebrow">From Start to Finish</div>
         <h2 id="process-consistency-title">What Remains Consistent Throughout</h2>
-        <p>A steady, personal approach keeps the experience grounded at every stage.</p>
+        <p>The same working standards apply from the earliest decisions through the final walkthrough.</p>
       </div>
 
       <div class="process-consistency-grid">
         <article>
-          <span aria-hidden="true">01</span>
+          <div class="process-consistency-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" focusable="false">
+              <path d="M4 5.5h11a3 3 0 0 1 3 3v4a3 3 0 0 1-3 3H9l-4.5 3v-3.6A3 3 0 0 1 2 12V8.5a3 3 0 0 1 2-3Z" />
+              <path d="M7 9.5h6M7 12.5h4" />
+            </svg>
+          </div>
           <h3>Direct Communication</h3>
-          <p>Responsive conversations and clear updates keep you informed and involved.</p>
+          <p>Responsive conversations and scheduled updates keep you informed without chasing answers.</p>
         </article>
         <article>
-          <span aria-hidden="true">02</span>
+          <div class="process-consistency-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" focusable="false">
+              <circle cx="12" cy="12" r="8.5" />
+              <path d="m14.8 9.2-1.7 3.9-3.9 1.7 1.7-3.9 3.9-1.7Z" />
+            </svg>
+          </div>
           <h3>Thoughtful Guidance</h3>
           <p>Important decisions are considered in context, with practical direction when you need it.</p>
         </article>
         <article>
-          <span aria-hidden="true">03</span>
+          <div class="process-consistency-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" focusable="false">
+              <path d="M3.5 12s3.1-5.5 8.5-5.5 8.5 5.5 8.5 5.5-3.1 5.5-8.5 5.5S3.5 12 3.5 12Z" />
+              <circle cx="12" cy="12" r="2.5" />
+              <path d="m15.8 17.2 1.4 1.4 3-3" />
+            </svg>
+          </div>
           <h3>Careful Oversight</h3>
-          <p>Quality, craftsmanship, and the details that shape daily life receive personal attention.</p>
+          <p>Construction quality, finish details, and day-to-day coordination receive direct attention.</p>
         </article>
       </div>
     </section>

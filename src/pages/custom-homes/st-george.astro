@@ -1,0 +1,124 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import HomeCard from "../../components/HomeCard.astro";
+import { getCollection } from "astro:content";
+
+const homes = (await getCollection("homes"))
+  .filter((home) => home.data.market === "St. George Area")
+  .sort((a, b) => a.data.order - b.data.order);
+
+const siteOrigin = Astro.site?.toString() ?? Astro.url.origin;
+const pageUrl = new URL("/custom-homes/st-george", siteOrigin).href;
+
+const serviceJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "Service",
+  "@id": `${pageUrl}#service`,
+  name: "Custom Home Building in the St. George Area",
+  description: "Personalized custom home design and construction in St. George, Hurricane, Sand Hollow, and Washington County, Utah.",
+  url: pageUrl,
+  provider: { "@id": `${siteOrigin.replace(/\/$/, "")}/#organization` },
+  areaServed: { "@type": "AdministrativeArea", name: "Washington County, Utah" },
+  serviceType: "Custom home building",
+};
+
+const breadcrumbsJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  itemListElement: [
+    { "@type": "ListItem", position: 1, name: "Home", item: new URL("/", siteOrigin).href },
+    { "@type": "ListItem", position: 2, name: "Southern Utah Custom Homes", item: new URL("/custom-homes/southern-utah", siteOrigin).href },
+    { "@type": "ListItem", position: 3, name: "St. George Area Custom Homes", item: pageUrl },
+  ],
+};
+---
+
+<BaseLayout
+  title="St. George Custom Home Builder | Utah Oasis Homes"
+  description="Build a custom home in St. George, Hurricane, Sand Hollow, or Washington County with direct oversight, desert-responsive design, and skilled construction."
+  canonicalPath="/custom-homes/st-george"
+  socialImage="/images/homes/desert-contemporary/desert-contemporary-hero.webp"
+  socialImageAlt="Contemporary custom home near St. George in Southern Utah"
+>
+  <script is:inline type="application/ld+json" set:html={JSON.stringify(serviceJsonLd)} />
+  <script is:inline type="application/ld+json" set:html={JSON.stringify(breadcrumbsJsonLd)} />
+
+  <section class="section service-area-page">
+    <nav aria-label="Breadcrumb" class="breadcrumbs">
+      <ol class="breadcrumbs-list">
+        <li class="breadcrumbs-item"><a href="/">Home</a></li>
+        <li class="breadcrumbs-separator" aria-hidden="true">→</li>
+        <li class="breadcrumbs-item"><a href="/custom-homes/southern-utah">Southern Utah</a></li>
+        <li class="breadcrumbs-separator" aria-hidden="true">→</li>
+        <li class="breadcrumbs-item breadcrumbs-current">St. George Area Custom Homes</li>
+      </ol>
+    </nav>
+
+    <header class="section-header service-area-page-header">
+      <div class="pill-eyebrow">St. George & Washington County</div>
+      <h1 class="section-title">Custom Homes Made for the St. George Landscape</h1>
+      <p class="section-subtitle">
+        Desert homes and private retreats planned for red-rock views, shade, privacy, pools, and
+        comfortable indoor-outdoor living.
+      </p>
+    </header>
+
+    <div class="service-area-copy">
+      <div>
+        <h2>Architecture That Responds to the Desert</h2>
+        <p>
+          Building in Washington County presents an opportunity to make the landscape part of daily
+          life. Thoughtful orientation can frame distant cliffs, protect private outdoor areas, manage
+          strong sunlight, and connect interior gathering rooms with courtyards, pools, and patios.
+        </p>
+        <p>
+          Utah Oasis Homes serves clients in St. George, Hurricane, Sand Hollow, and surrounding
+          Washington County communities. Troy provides direct oversight and coordinates a proven
+          team so the architectural intent, construction details, and homeowner experience
+          remain aligned from the first conversation through completion.
+        </p>
+      </div>
+
+      <aside class="card service-area-aside">
+        <h2>A Retreat Planned for Real Life</h2>
+        <p>
+          Whether the home is a full-time residence or a place to recharge, its rooms are organized
+          around occupancy, privacy, entertaining, and access to the outdoor spaces people use most.
+        </p>
+        <a class="service-area-link" href="/process">Explore the Building Journey →</a>
+      </aside>
+    </div>
+
+    <section class="service-area-communities" aria-labelledby="st-george-communities-title">
+      <div>
+        <div class="pill-eyebrow">Local Experience</div>
+        <h2 id="st-george-communities-title">St. George and Washington County Communities</h2>
+        <p>
+          The property may be in a golf community, on a red-rock view lot, or in a quiet desert neighborhood.
+          Every home is considered in relation to its own views, exposure, privacy, and purpose.
+        </p>
+      </div>
+      <div class="service-area-community-links" aria-label="St. George area communities">
+        <span>St. George</span>
+        <span>Washington County</span>
+        <span>Hurricane</span>
+        <span>Sand Hollow</span>
+        <span>Southern Utah</span>
+      </div>
+    </section>
+
+    <section class="service-area-projects" aria-labelledby="st-george-projects-title">
+      <div class="section-header">
+        <h2 id="st-george-projects-title" class="section-title">Custom Homes Near St. George</h2>
+        <p class="section-subtitle">Explore homes in St. George and Hurricane planned around desert views, privacy, pools, and indoor-outdoor living.</p>
+      </div>
+      <div class="card-grid service-area-home-grid">{homes.map((home) => <HomeCard home={home} />)}</div>
+    </section>
+
+    <div class="service-area-cta">
+      <h2>Planning a Custom Home Near St. George?</h2>
+      <p>Tell us about your property and the Southern Utah experience you want your home to create.</p>
+      <a class="btn btn-primary" href="/start">Start Your Home</a>
+    </div>
+  </section>
+</BaseLayout>

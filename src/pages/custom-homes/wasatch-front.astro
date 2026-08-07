@@ -1,0 +1,129 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import HomeCard from "../../components/HomeCard.astro";
+import { getCollection } from "astro:content";
+
+const homes = (await getCollection("homes"))
+  .filter((home) => home.data.serviceArea === "Wasatch Front")
+  .sort((a, b) => a.data.order - b.data.order);
+
+const siteOrigin = Astro.site?.toString() ?? Astro.url.origin;
+const pageUrl = new URL("/custom-homes/wasatch-front", siteOrigin).href;
+
+const serviceJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "Service",
+  "@id": `${pageUrl}#service`,
+  name: "Custom Home Building on the Wasatch Front",
+  description: "Personalized custom home design and construction across Utah's Wasatch Front.",
+  url: pageUrl,
+  provider: { "@id": `${siteOrigin.replace(/\/$/, "")}/#organization` },
+  areaServed: { "@type": "AdministrativeArea", name: "Wasatch Front, Utah" },
+  serviceType: "Custom home building",
+};
+
+const breadcrumbsJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  itemListElement: [
+    { "@type": "ListItem", position: 1, name: "Home", item: new URL("/", siteOrigin).href },
+    { "@type": "ListItem", position: 2, name: "Wasatch Front Custom Homes", item: pageUrl },
+  ],
+};
+---
+
+<BaseLayout
+  title="Utah County & Wasatch Front Custom Home Builder | Utah Oasis Homes"
+  description="Build a custom home in Utah County or along the Wasatch Front with direct builder involvement, site-responsive design, and experienced construction oversight."
+  canonicalPath="/custom-homes/wasatch-front"
+  socialImage="/images/homes/mountain-contemporary/mountain-contemporary-exterior-front.webp"
+  socialImageAlt="Mountain contemporary custom home on Utah's Wasatch Front"
+>
+  <script is:inline type="application/ld+json" set:html={JSON.stringify(serviceJsonLd)} />
+  <script is:inline type="application/ld+json" set:html={JSON.stringify(breadcrumbsJsonLd)} />
+
+  <section class="section service-area-page">
+    <nav aria-label="Breadcrumb" class="breadcrumbs">
+      <ol class="breadcrumbs-list">
+        <li class="breadcrumbs-item"><a href="/">Home</a></li>
+        <li class="breadcrumbs-separator" aria-hidden="true">→</li>
+        <li class="breadcrumbs-item breadcrumbs-current">Wasatch Front Custom Homes</li>
+      </ol>
+    </nav>
+
+    <header class="section-header service-area-page-header">
+      <div class="pill-eyebrow">Wasatch Front</div>
+      <h1 class="section-title">Custom Homes Shaped for Life Along the Wasatch Front</h1>
+      <p class="section-subtitle">
+        From established neighborhoods to view lots at the foot of the mountains, Utah Oasis Homes
+        designs residences for four-season comfort, daily family life, and long-term use.
+      </p>
+    </header>
+
+    <div class="service-area-copy">
+      <div>
+        <h2>Designed Around Your Property and Priorities</h2>
+        <p>
+          Building along the Wasatch Front calls for a measured response to the lot, the seasons, and
+          the rhythms of everyday family life. Each home begins with listening: how you want rooms to
+          connect, where natural light and views matter most, and what will make the home feel
+          comfortable for years to come.
+        </p>
+        <p>
+          Utah Oasis Homes brings more than 25 years of construction experience to projects in Utah
+          County, the Salt Lake area, and communities throughout the Wasatch corridor. Relevant
+          portfolio locations include Draper, Lehi, and Mapleton, with service extending to communities
+          such as Alpine, Springville, and Spanish Fork. Troy remains directly involved while
+          coordinating a trusted team of architects, craftspeople, and highly regarded subcontractors.
+        </p>
+      </div>
+
+      <aside class="card service-area-aside">
+        <h2>Direct Oversight from Planning Through Completion</h2>
+        <p>
+          Early planning, honest communication, coordinated trade schedules, and active quality
+          control keep every phase aligned with the plans and priorities established at the start.
+        </p>
+        <a class="service-area-link" href="/process">See How We Build →</a>
+      </aside>
+    </div>
+
+    <section class="service-area-communities" aria-labelledby="wasatch-communities-title">
+      <div>
+        <div class="pill-eyebrow">Communities We Serve</div>
+        <h2 id="wasatch-communities-title">Utah County, the Salt Lake Area, and the Wasatch Corridor</h2>
+        <p>
+          Each community presents a different combination of neighborhood character, mountain views,
+          lot conditions, and family priorities. Our work begins with the individual property rather
+          than a predetermined house plan.
+        </p>
+      </div>
+      <div class="service-area-community-links" aria-label="Wasatch Front service areas">
+        <a href="/custom-homes/utah-county">Utah County</a>
+        <span>Salt Lake Area</span>
+        <span>Draper</span>
+        <span>Lehi</span>
+        <span>Mapleton</span>
+        <span>Alpine</span>
+        <span>Springville</span>
+        <span>Spanish Fork</span>
+      </div>
+    </section>
+
+    <section class="service-area-projects" aria-labelledby="wasatch-projects-title">
+      <div class="section-header">
+        <h2 id="wasatch-projects-title" class="section-title">Homes Along the Wasatch Front</h2>
+        <p class="section-subtitle">
+          Explore homes designed for mountain views, four-season living, and the routines of their owners.
+        </p>
+      </div>
+      <div class="card-grid service-area-home-grid">{homes.map((home) => <HomeCard home={home} />)}</div>
+    </section>
+
+    <div class="service-area-cta">
+      <h2>Begin with a Conversation</h2>
+      <p>Tell us about your property, your priorities, and what you hope your home will make possible.</p>
+      <a class="btn btn-primary" href="/start">Start Your Home</a>
+    </div>
+  </section>
+</BaseLayout>

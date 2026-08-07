@@ -6,6 +6,14 @@ const homes = defineCollection({
 
     location: z.string().trim().min(1, "A home location is required."),
 
+    serviceArea: z.enum(["Wasatch Front", "Southern Utah"]),
+
+    market: z.enum(["Utah County", "St. George Area"]).optional(),
+
+    seoTitle: z.string().trim().min(1).optional(),
+
+    seoDescription: z.string().trim().min(1).max(170).optional(),
+
     coverImage: z
       .string()
       .trim()
@@ -14,6 +22,8 @@ const homes = defineCollection({
         "/images/",
         'The coverImage path must begin with "/images/".'
       ),
+
+    coverAlt: z.string().trim().min(1, "Cover image alt text is required."),
 
     tags: z
       .array(z.string().trim().min(1))

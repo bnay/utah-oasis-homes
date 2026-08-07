@@ -1,67 +1,66 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
-
-const showTeamConcept = import.meta.env.PUBLIC_SHOW_TEAM_CONCEPT === 'true';
 ---
 
 <BaseLayout
-  title="Who We Are | Utah Oasis Homes"
-  description="Meet Utah Oasis Homes and learn about the personal attention, thoughtful planning, and hands-on care behind every custom home."
+  title="About Utah Oasis Homes | Utah Custom Home Builder"
+  description="Meet Utah Oasis Homes, a Utah custom home builder with more than 25 years of experience, direct project oversight, and a trusted network of skilled professionals."
   canonicalPath="/about"
 >
   <section class="section about-page">
+    <nav aria-label="Breadcrumb" class="breadcrumbs">
+      <ol class="breadcrumbs-list">
+        <li class="breadcrumbs-item"><a href="/">Home</a></li>
+        <li class="breadcrumbs-separator" aria-hidden="true">→</li>
+        <li class="breadcrumbs-item breadcrumbs-current">Who We Are</li>
+      </ol>
+    </nav>
+
     <header class="about-page-intro">
       <div class="pill-eyebrow">Who We Are</div>
       <h1>Personal Attention. Thoughtful Homes. Lasting Craftsmanship.</h1>
       <p>
-        Utah Oasis Homes brings experience, personal oversight, and a genuine commitment to each
-        home—creating places that feel distinctive, restorative, and deeply connected to the people
-        who live there.
+        Utah Oasis Homes combines more than 25 years of construction experience with direct builder
+        involvement and a trusted network of skilled professionals. The result is a home resolved for
+        its owners, its property, and the demands of everyday life.
       </p>
     </header>
 
-    {showTeamConcept ? (
-      <figure class="about-team-hero">
-        <img
-          src="/images/about-team-concept.webp"
-          alt="Photography concept showing a custom home builder and team at an active residential framing site"
-          width="1408"
-          height="768"
-          loading="eager"
-          fetchpriority="high"
-          decoding="async"
-        />
-
-        <figcaption class="about-team-concept-label">
-          Photography concept <span aria-hidden="true">•</span> Final team photo forthcoming
-        </figcaption>
-      </figure>
-    ) : null}
+    <figure class="about-team-hero">
+      <img
+        src="/images/utah-oasis-homes-team.webp"
+        alt="Troy Shaw and the Utah Oasis Homes team"
+        width="1970"
+        height="1094"
+        loading="eager"
+        fetchpriority="high"
+        decoding="async"
+      />
+    </figure>
 
     <section class="about-story" aria-labelledby="about-story-title">
       <div class="about-story-copy">
-        <div class="pill-eyebrow">A Personal Approach</div>
-        <h2 id="about-story-title">A more personal way to build</h2>
+        <div class="pill-eyebrow">The Builder Behind the Work</div>
+        <h2 id="about-story-title">Experience you can work with directly</h2>
 
         <p>
-          With more than 25 years of construction experience, Utah Oasis Homes creates distinctive
-          custom homes shaped around each client’s vision, lifestyle, and setting. Every project is
-          guided by honest communication, thoughtful planning, and close attention to detail.
+          Troy brings more than 25 years of construction experience to every Utah Oasis Homes project.
+          He works directly with each client to understand the property, priorities, investment, and
+          daily routines that should inform the home.
         </p>
 
         <p>
           That experience is reflected in a team of skilled craftspeople who understand that lasting
-          quality comes from doing the details well. Troy stays closely involved from the first
-          conversation through completion, helping keep decisions clear, the work carefully
-          coordinated, and the experience genuinely collaborative.
+          quality comes from executing the details well. Troy remains involved from the first
+          conversation through completion, coordinating decisions, monitoring the work, and keeping
+          the homeowner connected to progress.
         </p>
 
         <p>
-          Over the years, Troy has carefully selected highly regarded subcontractors, architects,
+          Over the years, Troy has selected highly regarded subcontractors, architects,
           designers, engineers, and trade partners whose skill, reliability, and standards align
           with his own. Together, they bring considered design and experienced craftsmanship to
-          every stage of the home—resulting in a place that feels personal, enduring, and
-          unmistakably yours.
+          every stage of the home—turning a shared plan into a durable, well-resolved residence.
         </p>
       </div>
 
@@ -77,8 +76,8 @@ const showTeamConcept = import.meta.env.PUBLIC_SHOW_TEAM_CONCEPT === 'true';
         </div>
 
         <div class="about-experience-detail">
-          <span>Built Around You</span>
-          <p>A home shaped by your priorities, your property, and the way you want to live.</p>
+          <span>Purposeful Planning</span>
+          <p>Rooms, views, materials, and circulation are evaluated against how you intend to live.</p>
         </div>
       </aside>
     </section>
@@ -106,7 +105,7 @@ const showTeamConcept = import.meta.env.PUBLIC_SHOW_TEAM_CONCEPT === 'true';
 
         <article>
           <h3>Build with Care</h3>
-          <p>Clear communication and careful execution turn a thoughtful design into a lasting home.</p>
+          <p>Disciplined coordination and precise execution turn good plans into lasting work.</p>
         </article>
       </div>
     </section>
@@ -116,8 +115,8 @@ const showTeamConcept = import.meta.env.PUBLIC_SHOW_TEAM_CONCEPT === 'true';
         <div class="pill-eyebrow">Start a Conversation</div>
         <h2 id="about-cta-title">Let’s talk about the home you’re imagining.</h2>
         <p>
-          Share where you hope to build, how you want to live, and what would make the home feel
-          distinctly yours.
+          Share where you hope to build, what you need the home to accomplish, and which ideas are
+          already taking shape.
         </p>
       </div>
 

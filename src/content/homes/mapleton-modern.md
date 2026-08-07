@@ -1,7 +1,12 @@
 ---
 title: Mapleton Modern
 location: Mapleton, Utah
+serviceArea: Wasatch Front
+market: Utah County
+seoTitle: Mapleton Modern Custom Home in Mapleton, Utah | Utah Oasis Homes
+seoDescription: Tour a modern Mapleton home with warm wood, expansive windows, open gathering spaces, a theater, wet bar, and private sauna.
 coverImage: /images/homes/mapleton-modern/mapleton-modern-exterior-front.webp
+coverAlt: Front exterior of Mapleton Modern custom home in Mapleton, Utah
 # tags: ["Wasatch Front"]
 featured: true
 order: 2

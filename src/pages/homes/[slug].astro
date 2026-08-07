@@ -16,7 +16,7 @@ type Props = {
 };
 
 const { home } = Astro.props as Props;
-const { title, location, coverImage, tags } = home.data;
+const { title, location, coverImage, coverAlt, tags, serviceArea } = home.data;
 
 const homeDescription = home.body
   .replace(/\s+/g, " ")
@@ -27,6 +27,47 @@ const { Content } = await render(home);
 const galleryImages = (home.data.gallery ?? []).filter(
   (src) => src !== coverImage
 );
+
+const describeGalleryImage = (src: string) => {
+  const filename = src.split("/").at(-1)?.replace(/\.[^.]+$/, "") ?? "";
+  const projectPrefix = `${home.slug}-`;
+  const descriptivePart = filename.startsWith(projectPrefix)
+    ? filename.slice(projectPrefix.length)
+    : filename;
+
+  const description = descriptivePart
+    .replace(/-optimized$/, "")
+    .replace(/-aerial$/, " aerial view")
+    .replace(/-/g, " ")
+    .replace(/\b(interior|exterior)\b/g, "")
+    .replace(/\s+/g, " ")
+    .trim();
+
+  if (!description || /^\d+$/.test(description)) {
+    return `${title} custom home in ${location}`;
+  }
+
+  return `${description.charAt(0).toUpperCase()}${description.slice(1)} at ${title} in ${location}`;
+};
+
+const galleryItems = galleryImages.map((src) => ({
+  src,
+  alt: describeGalleryImage(src),
+}));
+
+const serviceAreaHref = home.data.market === "Utah County"
+  ? "/custom-homes/utah-county"
+  : home.data.market === "St. George Area"
+    ? "/custom-homes/st-george"
+    : serviceArea === "Wasatch Front"
+      ? "/custom-homes/wasatch-front"
+      : "/custom-homes/southern-utah";
+
+const serviceAreaLabel = home.data.market === "Utah County"
+  ? "Utah County"
+  : home.data.market === "St. George Area"
+    ? "the St. George area"
+    : serviceArea;
 
 // Build an ordered list for prev/next navigation
 const allHomes = await getCollection("homes");
@@ -48,13 +89,14 @@ const nextHome = idx >= 0 && idx < allHomes.length - 1 ? allHomes[idx + 1] : nul
 
 const siteOrigin = Astro.site?.toString() ?? Astro.url.origin;
 const homeUrl = new URL(`/homes/${home.slug}`, siteOrigin).href;
+const projectDescription = home.data.seoDescription ?? homeDescription;
 
 const homeSchema = {
   "@context": "https://schema.org",
   "@type": "CreativeWork",
   "@id": `${homeUrl}#project`,
   name: title,
-  description: homeDescription,
+  description: projectDescription,
   url: homeUrl,
   image: [coverImage, ...galleryImages].map(
     (src) => new URL(src, siteOrigin).href
@@ -62,26 +104,65 @@ const homeSchema = {
   creator: {
     "@id": `${siteOrigin.replace(/\/$/, "")}/#organization`,
   },
+  provider: {
+    "@id": `${siteOrigin.replace(/\/$/, "")}/#organization`,
+  },
   contentLocation: {
     "@type": "Place",
     name: location,
   },
   keywords: tags?.join(", "),
+  about: {
+    "@type": "Thing",
+    name: `Custom home building in ${serviceArea}`,
+  },
+};
+
+const breadcrumbsJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  itemListElement: [
+    {
+      "@type": "ListItem",
+      position: 1,
+      name: "Home",
+      item: new URL("/", siteOrigin).href,
+    },
+    {
+      "@type": "ListItem",
+      position: 2,
+      name: "Our Homes",
+      item: new URL("/homes", siteOrigin).href,
+    },
+    {
+      "@type": "ListItem",
+      position: 3,
+      name: title,
+      item: homeUrl,
+    },
+  ],
 };
 
 ---
 
 <BaseLayout
-  title={`${title} | Utah Oasis Homes`}
-  description={homeDescription}
+  title={home.data.seoTitle ?? `${title} Custom Home in ${location} | Utah Oasis Homes`}
+  description={projectDescription}
   canonicalPath={`/homes/${home.slug}`}
   socialImage={coverImage}
+  socialImageAlt={coverAlt}
+  socialType="article"
 >
 
   <script
     is:inline
     type="application/ld+json"
     set:html={JSON.stringify(homeSchema)}
+  />
+  <script
+    is:inline
+    type="application/ld+json"
+    set:html={JSON.stringify(breadcrumbsJsonLd)}
   />
 
   <section class="home-detail">
@@ -95,7 +176,7 @@ const homeSchema = {
           data-gallery-index="0"
           aria-label={`Open large view of ${title}`}
         >
-          <img src={coverImage} alt={title} />
+          <img src={coverImage} alt={coverAlt} />
           <span class="home-gallery-zoom" aria-hidden="true">
             View larger
           </span>
@@ -109,6 +190,13 @@ const homeSchema = {
         <div class="home-hero-description">
           <Content />
         </div>
+
+        <a
+          class="home-service-area-link"
+          href={serviceAreaHref}
+        >
+          Explore custom home building in {serviceAreaLabel} →
+        </a>
 
         {tags?.length ? (
           <div class="tag-row home-tags">
@@ -124,7 +212,7 @@ const homeSchema = {
       <section class="home-gallery" aria-label="Home gallery">
         <h2 class="home-gallery-title">Gallery</h2>
         <div class="home-gallery-grid">
-          {galleryImages.map((src, index) => (
+          {galleryItems.map((item, index) => (
             <button
               class="home-gallery-trigger"
               type="button"
@@ -132,8 +220,8 @@ const homeSchema = {
               aria-label={`Open large view ${index + 2} of ${galleryImages.length + 1} for ${title}`}
             >
               <img
-                src={src}
-                alt={`${title} — additional view ${index + 1}`}
+                src={item.src}
+                alt={item.alt}
                 loading="lazy"
                 decoding="async"
               />

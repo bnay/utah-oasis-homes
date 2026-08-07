@@ -1,0 +1,125 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import HomeCard from "../../components/HomeCard.astro";
+import { getCollection } from "astro:content";
+
+const homes = (await getCollection("homes"))
+  .filter((home) => home.data.market === "Utah County")
+  .sort((a, b) => a.data.order - b.data.order);
+
+const siteOrigin = Astro.site?.toString() ?? Astro.url.origin;
+const pageUrl = new URL("/custom-homes/utah-county", siteOrigin).href;
+
+const serviceJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "Service",
+  "@id": `${pageUrl}#service`,
+  name: "Custom Home Building in Utah County",
+  description: "Personalized custom home design and construction in Utah County, including Lehi, Mapleton, Alpine, Springville, and Spanish Fork.",
+  url: pageUrl,
+  provider: { "@id": `${siteOrigin.replace(/\/$/, "")}/#organization` },
+  areaServed: { "@type": "AdministrativeArea", name: "Utah County, Utah" },
+  serviceType: "Custom home building",
+};
+
+const breadcrumbsJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  itemListElement: [
+    { "@type": "ListItem", position: 1, name: "Home", item: new URL("/", siteOrigin).href },
+    { "@type": "ListItem", position: 2, name: "Wasatch Front Custom Homes", item: new URL("/custom-homes/wasatch-front", siteOrigin).href },
+    { "@type": "ListItem", position: 3, name: "Utah County Custom Homes", item: pageUrl },
+  ],
+};
+---
+
+<BaseLayout
+  title="Utah County Custom Home Builder | Utah Oasis Homes"
+  description="Build a custom home in Utah County with direct builder involvement and experienced oversight in Lehi, Mapleton, Alpine, Springville, Spanish Fork, and nearby communities."
+  canonicalPath="/custom-homes/utah-county"
+  socialImage="/images/homes/mapleton-modern/mapleton-modern-exterior-front.webp"
+  socialImageAlt="Custom home built in Mapleton, Utah County"
+>
+  <script is:inline type="application/ld+json" set:html={JSON.stringify(serviceJsonLd)} />
+  <script is:inline type="application/ld+json" set:html={JSON.stringify(breadcrumbsJsonLd)} />
+
+  <section class="section service-area-page">
+    <nav aria-label="Breadcrumb" class="breadcrumbs">
+      <ol class="breadcrumbs-list">
+        <li class="breadcrumbs-item"><a href="/">Home</a></li>
+        <li class="breadcrumbs-separator" aria-hidden="true">→</li>
+        <li class="breadcrumbs-item"><a href="/custom-homes/wasatch-front">Wasatch Front</a></li>
+        <li class="breadcrumbs-separator" aria-hidden="true">→</li>
+        <li class="breadcrumbs-item breadcrumbs-current">Utah County Custom Homes</li>
+      </ol>
+    </nav>
+
+    <header class="section-header service-area-page-header">
+      <div class="pill-eyebrow">Utah County</div>
+      <h1 class="section-title">Custom Homes Designed for Life in Utah County</h1>
+      <p class="section-subtitle">
+        Residences planned for family life, mountain and valley views, four-season comfort, and the
+        practical details that make everyday routines work well.
+      </p>
+    </header>
+
+    <div class="service-area-copy">
+      <div>
+        <h2>A Home That Belongs to Its Setting</h2>
+        <p>
+          Utah County offers everything from established neighborhoods to foothill properties and
+          open view lots. A successful design considers how the home meets its site, where morning and
+          evening light enter, how family spaces connect, and how indoor rooms extend naturally outside.
+        </p>
+        <p>
+          Utah Oasis Homes works with clients in Lehi, Mapleton, Alpine, Springville, Spanish Fork,
+          and nearby Utah County communities. Every project receives Troy's direct involvement and
+          the coordinated skill of trusted architects, craftspeople, and subcontractors selected for
+          the quality of their work.
+        </p>
+      </div>
+
+      <aside class="card service-area-aside">
+        <h2>Built Around the Way You Live</h2>
+        <p>
+          The plan begins with your routines, priorities, property, and long-term goals—not a standard
+          set of rooms adapted after the fact.
+        </p>
+        <a class="service-area-link" href="/process">Explore the Building Journey →</a>
+      </aside>
+    </div>
+
+    <section class="service-area-communities" aria-labelledby="utah-county-communities-title">
+      <div>
+        <div class="pill-eyebrow">Local Experience</div>
+        <h2 id="utah-county-communities-title">Communities Across Utah County</h2>
+        <p>
+          The needs of a Mapleton view lot differ from an established Lehi neighborhood. Each design
+          responds to its particular property, surroundings, and homeowners.
+        </p>
+      </div>
+      <div class="service-area-community-links" aria-label="Utah County communities">
+        <span>Lehi</span>
+        <span>Mapleton</span>
+        <span>Alpine</span>
+        <span>Springville</span>
+        <span>Spanish Fork</span>
+        <span>Utah County</span>
+      </div>
+    </section>
+
+    <section class="service-area-projects" aria-labelledby="utah-county-projects-title">
+      <div class="section-header">
+        <h2 id="utah-county-projects-title" class="section-title">Custom Homes in Utah County</h2>
+        <p class="section-subtitle">Explore homes built in Lehi and Mapleton for different properties, priorities, and family routines.</p>
+      </div>
+      <div class="card-grid service-area-home-grid">{homes.map((home) => <HomeCard home={home} />)}</div>
+    </section>
+
+    <div class="service-area-cta">
+      <h2>Planning a Custom Home in Utah County?</h2>
+      <p>Begin with a conversation about your property, priorities, timing, and vision.</p>
+      <a class="btn btn-primary" href="/start">Start Your Home</a>
+    </div>
+  </section>
+</BaseLayout>

@@ -1,7 +1,12 @@
 ---
 title: Desert Contemporary
 location: St. George, Utah
+serviceArea: Southern Utah
+market: St. George Area
+seoTitle: Desert Contemporary Home in St. George, Utah | Utah Oasis Homes
+seoDescription: Explore a contemporary St. George custom home with warm natural materials, walls of glass, a private courtyard, pool, and outdoor kitchen.
 coverImage: /images/homes/desert-contemporary/desert-contemporary-hero.webp
+coverAlt: Desert Contemporary custom home surrounded by the red-rock landscape of St. George, Utah
 # tags: ["Southern Utah", "Outdoor Living", "Pool"]
 featured: true
 order: 1

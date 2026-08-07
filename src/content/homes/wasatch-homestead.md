@@ -1,7 +1,11 @@
 ---
 title: Wasatch Homestead
 location: Wasatch Front, Utah
+serviceArea: Wasatch Front
+seoTitle: Wasatch Homestead Custom Home | Utah Oasis Homes
+seoDescription: Tour Wasatch Homestead, a welcoming custom home with modern farmhouse character, generous gathering spaces, and mountain-connected outdoor living.
 coverImage: /images/homes/wasatch-homestead/wasatch-homestead-exterior-front.webp
+coverAlt: Wasatch Homestead custom home beneath the Wasatch mountains
 # tags: ["Wasatch Front"]
 featured: false
 order: 8

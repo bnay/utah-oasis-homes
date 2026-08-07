@@ -12,8 +12,11 @@ export default defineConfig({
     ? []
     : [
         sitemap({
-          filter: (page) =>
-            new URL(page).pathname.replace(/\/$/, "") !== "/thank-you",
+          filter: (page) => {
+            const pathname = new URL(page).pathname.replace(/\/$/, "");
+
+            return pathname !== "/thank-you" && pathname !== "/404.html";
+          },
         }),
       ],
 });
